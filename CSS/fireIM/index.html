@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="section">
+        <div class="plane-wrapper">
+            <img src="http://fir.im/images/plane.svg" alt="" class="plane">
+            <div class="rotate-container">
+                <img src="http://fir.im/images/propeller.svg" alt="" class="propeller">
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('keydown', function() {
+            document.querySelector('.plane-wrapper').classList.add('plane-out');
+            // 给.plane-wrapper添加类名plane-out
+        })
+    </script>
+</body>
+
+</html>
