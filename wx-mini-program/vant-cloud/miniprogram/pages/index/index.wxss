@@ -1,0 +1,39 @@
+/* miniprogram/pages/index/index.wxss */
+
+.new-item {
+    width: 80%;
+    height: 200rpx;
+    background-color: #fff;
+    border-radius: 38rpx;
+    text-align: center;
+    margin: 40rpx auto;
+    box-shadow: 0px 7px 20px #aaaaaa;
+    display: flex;
+    justify-content: space-between;
+    padding: 20rpx;
+    transition: .5s all;
+}
+
+.new-item image {
+    width: 124rpx;
+    height: 124rpx;
+}
+
+.right-corner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.right-corner .item-name {
+    margin-right: 14rpx;
+}
+
+.right-corner .icon-arrow {
+    text-align: right;
+    padding-right: 13rpx;
+}
+
+.new-item:hover {
+    box-shadow: none;
+}
