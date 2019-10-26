@@ -14,7 +14,16 @@ exports.main = async(event, context) => {
                 creatBy: userInfo.openId,
                 creatTime: new Date(),
                 delete: false,
-                updateTime: new Date()
+                updatTime: new Date()
             }
         }) //从前端拿到的数据要存到group表中
+        .then(res => {
+            return db.collection('user-group').add({
+                data: {
+                    groupId: res._id,
+                    userId: userInfo.openId,
+                    invalid: false
+                }
+            })
+        })
 }

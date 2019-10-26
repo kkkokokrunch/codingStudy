@@ -17,7 +17,7 @@ Page({
         })
     },
     onGroupNameChange(e) {
-        console.log(e)
+        // console.log(e)
         this.setData({
             groupName: e.detail
         })
