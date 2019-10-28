@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //买笔
+        function buy() {
+            console.log('开始买笔');
+            var p = new Promise(function(resolve, reject) { //新建一个promise实例，里面存放着买笔的状态
+                setTimeout(function() { //一个将要执行的回调函数
+                    console.log('买了笔芯')
+                    resolve("数学作业") //买笔的状态确定为resolve，将要处理的数据放在resolve中
+                }, 1000)
+            })
+            return p //将实例返回出去
+        }
+
+        //写作业
+        function work(data) { //这里接收到的data就是上面resolve中的数据
+            console.log('开始写作业' + data)
+            var p = new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                    console.log('写完作业')
+                    resolve('作业本') //同理，写作业的状态确定为resolve，写完作业将作业本存放在resolve中
+                }, 1000)
+            })
+            return p
+        }
+
+        //交作业
+        function out(data) { //这里的data就是work()中resolve存放的作业本
+            console.log('开始交作业' + data)
+            var p = new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                    console.log('上交完毕')
+                    resolve("得分：A") //同理，交作业的状态确定为resolve，交完作业将得分A放在resolve中，留给下一个回调函数处理
+                }, 1000)
+            })
+            return p
+        }
+
+        buy().then(work).then(out).then(function(data) {
+            console.log(data); //最后一个回调函数中的data，就是out中resolve存放的"得分：A"
+        })
+    </script>
+</body>
+
+</html>
