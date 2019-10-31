@@ -2,7 +2,7 @@
   <div id="app">
     <router-link to="/">首页</router-link>
     <router-link to="/mine">我的</router-link>
-    <router-link to="/detail">详情</router-link>
+    <router-link to="/detail" tag="button">详情</router-link>
     <br/>
     <router-link to="/mine/mine2">我的2</router-link>
     <router-view/>  
