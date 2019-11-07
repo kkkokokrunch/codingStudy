@@ -5,13 +5,20 @@
     <router-link to="/detail" tag="button">详情</router-link>
     <br/>
     <router-link to="/mine/mine2">我的2</router-link>
+
+    <router-link :to="'/user/'+userId">用户</router-link>
     <router-view/>  
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      userId:'zhangsan'
+    }
+  }
 }
 </script>
 

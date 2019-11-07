@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Mine from '@/components/Mine'
 import Detail from '@/components/Detail'
 import Mine2 from '@/components/Mine2'
+import User from '@/components/User'
 Vue.use(Router)
 
 export default new Router({
@@ -33,7 +34,13 @@ export default new Router({
             path: '/detail',
             name: 'Detail',
             component: Detail
-        }
+        },
+        {
+            path: '/user/:abc',
+            name: 'User',
+            component: User
+        },
+
     ],
     mode: 'history'
 })

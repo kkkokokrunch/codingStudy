@@ -70,3 +70,35 @@ export default new Router({
 })
 ```
   然后在相应页面的css中修改active的颜色，就会出现点击后有不同的效果
+
+### 动态路由
+1. 在index.js中拼接
+```
+{
+    path: '/user/:abc',
+    name: 'User',
+    component: User
+}
+```
+2. 在App.vue中用v-bind绑定
+```
+<router-link :to="'/user/'+userId">用户</router-link>
+
+//data中
+data() {
+  return {
+    userId:'zhangsan'
+  }
+}
+``` 
+这样路由就会根据data传递的参数拼接显示
+
+3. 如何将路由的参数显示在页面中
+```
+computed: {
+    userId() {
+        return this.$route.params.abc
+    }
+}
+```
+这里的route是当前处于活跃状态的路由，而router是index.js中的new Router出来的实例
