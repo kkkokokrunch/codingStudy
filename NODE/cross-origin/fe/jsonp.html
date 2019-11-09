@@ -15,8 +15,9 @@
         }
     </script>
     <!-- 1.script加载回来的东西被当做js执行 -->
+    <!-- 2.json返回的是一个字符串，是前端预先定义好的方法的执行 -->
     <script src="http://localhost:3000/api/getBook"></script>
-    <script>
+    <!-- <script>
         var obj = {
             a: 1
         }
@@ -28,7 +29,7 @@
         setTimeout(() => {
             obj.b = 123
         }, 8)
-    </script>
+    </script> -->
 
 </body>
 
