@@ -63,6 +63,7 @@
       :deliveryPrice = "seller.deliveryPrice"
       :minPrice = "seller.minPrice"
     ></shopcart>
+    <!-- 接收到了app.vue通过路由传来的seller数据 -->
   </div>
 </template>
 

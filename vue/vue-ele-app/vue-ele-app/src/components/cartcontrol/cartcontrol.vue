@@ -1,7 +1,7 @@
 <template>
   <div class="cartcontrol">
     <transition name="move">
-      <div class="cart-decrease" v-show="food.count>0" @click.stop.prevent="decreaseCart">
+      <div class="cart-decrease" v-show="food.count" @click.stop.prevent="decreaseCart">
         <span class="inner icon-remove_circle_outline"></span>
       </div>
     </transition>
@@ -21,7 +21,7 @@ export default {
     addCart (event) {
       // console.log(event)
       if (!this.food.count) {
-        this.$set(this.food, 'count', 1)
+        this.$set(this.food, 'count', 1) //手动set一个count字段
       } else {
         this.food.count++
       }

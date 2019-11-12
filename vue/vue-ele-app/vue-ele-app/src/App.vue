@@ -13,7 +13,8 @@
         <router-link to="/seller">商家</router-link>
       </div>
     </div>
-    <router-view :seller="seller"/>
+    <router-view :seller="seller"/> 
+    <!-- 路由传参：从app.vue传到goods.vue -->
   </div>
 </template>
 
@@ -34,8 +35,8 @@ export default {
       .then((res) => {
         console.log(res)
         if (res.data.errno === 0) {
-          // this.seller = res.data.data
           this.seller = Object.assign({}, this.seller, res.data.data)
+          // console.log(seller)
         }
       })
   }
