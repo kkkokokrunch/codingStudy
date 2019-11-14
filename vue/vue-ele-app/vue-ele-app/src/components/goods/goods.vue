@@ -42,7 +42,7 @@
       </div>
     </div>
     <!-- 购物车 -->
-    <shopcart :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
+    <shopcart :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" ref="shopcart"></shopcart>
     <!-- 接收到了app.vue通过路由传来的seller数据 -->
   </div>
 </template>
@@ -139,7 +139,14 @@
           this.listHeight.push(height)
         }
       },
-      addFood() {
+      addFood(target) {
+        this._drop(target)
+      },
+      _drop(target) {
+        // 体验优化，异步执行下落动画
+        this.$nextTick(() => {
+          this.$refs.shopcart.drop(target) //父组件调用子组件内部的方法
+        })
       }
     }
   }

@@ -11,12 +11,13 @@
                 <div class="top-right">
                     <div class="wrapper">
                         <div class="name">服务态度</div>
-                        <star :size="36"></star>
+                        <star :size="36" :score="seller.serviceScore"></star>
                         <div class="score">{{seller.serviceScore}}</div>
                     </div>
                     <div class="wrapper">
                         <div class="name">商品评分</div>
-                        <star :size="36"></star>
+                        <!-- <star :size="36"></star> -->
+                        <star :size="36" :score="seller.foodScore"></star>
                         <div class="score">{{seller.foodScore}}</div>
                     </div>
                     <div class="time-wrapper">
@@ -41,7 +42,7 @@
                             <div class="rating-main">
                                 <div class="username">{{rating.username}}</div>
                                 <div class="userdelivery">
-                                    <star :size="24"></star>
+                                    <star :size="24" :score="rating.score"></star>
                                     <span>{{rating.deliveryTime}}</span>
                                 </div>
                                 <div class="usertext">{{rating.text}}</div>
@@ -192,14 +193,14 @@
                         color rgb(7,17,27)
                     .userdelivery
                         display flex
-                        vertical-align bottom
+                        margin 4px 0 6px 0
                         .star
-                            margin 4px 6px 6px 0
+                            margin-right 6px
                         span 
                             font-size 10px
                             color #93999f
                             font-weight 200
-                            line-height 12px
+                            // line-height 12px
                     .usertext
                         font-size 12px
                         color rgb(7,17,27)
@@ -225,10 +226,5 @@
                 line-height 12px
                 font-weight 200
                 color #93999f
-                
-
-           
-
-
-    
+ 
 </style>

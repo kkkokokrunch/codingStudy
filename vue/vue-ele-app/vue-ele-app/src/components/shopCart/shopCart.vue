@@ -4,12 +4,12 @@
       <div class="content" @click="toggleList">
         <div class="content-left">
           <div class="logo-wrapper">
-            <div class="logo">
+            <div class="logo" :class="{'highlight':totalPrice>0}">
               <i class="icon-shopping_cart" :class="{'highlight':totalPrice>0}"></i>
             </div>
-            <div class="num">{{totalCount}}</div>
+            <div class="num" v-show="totalCount>0">{{totalCount}}</div>
           </div>
-          <div class="price" :class="{'highlight':totalPrice>0}">{{totalPrice}}</div>
+          <div class="price" :class="{'highlight':totalPrice>0}">¥{{totalPrice}}</div>
           <div class="desc">另需配送费¥{{deliveryPrice}}元</div>
         </div>
         <div class="content-right">
@@ -18,18 +18,28 @@
           </div>
         </div>
       </div>
+      <div class="ball-container">
+        <!-- ball -->
+        <div v-for="(ball, index) in balls" :key="index">
+          <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
+            <div class="ball" v-show="ball.show">
+              <div class="inner inner-hook"></div>
+            </div>
+          </transition>
+        </div>
+      </div>
       <transition name="fold">
         <div class="shopcart-list" v-show="listShow">
           <div class="list-header">
             <h1 class="title">购物车</h1>
             <span class="empty" @click="empty">清空</span>
           </div>
-          <div class="list-content" ref="listcontent">
+          <div class="list-content" ref="listContent">
             <ul>
-              <li class="food" v-for="(item,index) in selectFoods" :key="index">
+              <li class="food" v-for="(item, index) in selectFoods" :key="index">
                 <span class="name">{{item.name}}</span>
                 <div class="price">
-                  <span>￥{{item.price*item.count}}</span>
+                  <span>¥{{item.price*item.count}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
                   <cartcontrol :food="item"></cartcontrol>
@@ -40,7 +50,7 @@
         </div>
       </transition>
     </div>
-    <transition class="fade">
+    <transition name="fade">
       <div class="list-mask" v-show="listShow" @click="hideList"></div>
     </transition>
   </div>
@@ -50,9 +60,6 @@
 import cartcontrol from '@/components/cartcontrol/cartcontrol'
 import BScroll from 'better-scroll'
 export default {
-  components: {
-    cartcontrol
-  },
   props: {
     selectFoods: {
       type: Array,
@@ -74,10 +81,31 @@ export default {
       default: 0
     }
   },
-  data() {
+  data () {
     return {
-       fold: true
+      fold: true,
+      balls: [
+        {
+          show: false
+        },
+        {
+          show: false
+        },
+        {
+          show: false
+        },
+        {
+          show: false
+        },
+        {
+          show: false
+        }
+      ],
+      dropBalls: []
     }
+  },
+  components: {
+    cartcontrol
   },
   computed: {
     totalCount () {
@@ -88,46 +116,43 @@ export default {
       return count
     },
     totalPrice () {
-      let total = 0;
+      let total = 0
       this.selectFoods.forEach((food) => {
         total += food.price * food.count
       })
       return total
     },
     payDesc () {
-      if(this.totalPrice === 0){
-        return `￥${this.minPrice}元起送`
-      }
-      else if (this.totalPrice < this.minPrice){
+      if (this.totalPrice === 0) {
+        return `¥${this.minPrice}元起送`
+      } else if (this.totalPrice < this.minPrice) {
         let diff = this.minPrice - this.totalPrice
-        return `还差￥${diff}元起送`
-      }
-      else {
+        return `还差¥${diff}元起送`
+      } else {
         return '去结算'
       }
     },
-    payClass (){
+    payClass () {
       if (this.totalPrice < this.minPrice) {
         return 'not-enough'
-      }
-      else {
+      } else {
         return 'enough'
       }
     },
-    listShow() {
-      if(!this.totalCount) {
+    listShow () {
+      if (!this.totalCount) {
         this.fold = true
         return false
       }
       let show = !this.fold
-      if(show) {
-        this.$nextTick(() => { //保证dom结构渲染完才会执行
-        if(!this.scroll) {
-          this.scroll = new BScroll(this.$refs.listcontent, {
-          click:true
-        })
-      }else {
-        this.scroll.refresh()
+      if (show) {
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.listContent, {
+              click: true
+            })
+          } else {
+            this.scroll.refresh()
           }
         })
       }
@@ -135,19 +160,61 @@ export default {
     }
   },
   methods: {
-    toggleList() {
-      if(!this.totalCount) {
+    toggleList () {
+      if (!this.totalCount) {
         return
       }
       this.fold = !this.fold
     },
-    empty() {
+    empty () {
       this.selectFoods.forEach((food) => {
         food.count = 0
       })
     },
-    hideList() {
+    hideList () {
       this.fold = true
+    },
+    drop (el) {
+      for (let i = 0; i < this.balls.length; i++) {
+        let ball = this.balls[i]
+        if (!ball.show) {
+          ball.show = true
+          ball.el = el
+          this.dropBalls.push(ball)
+          return
+        }
+      }
+    },
+    beforeDrop (el) {
+      let count = this.balls.length
+      while (count--) {
+        let ball = this.balls[count]
+        if (ball.show) {
+          let rect = ball.el.getBoundingClientRect()
+          let x = rect.left - 32
+          let y = -(window.innerHeight - rect.top - 22)
+          el.style.display = '';
+          el.style.transform = `translate3d(0, ${y}px, 0)`
+          let inner = el.getElementsByClassName('inner-hook')[0]
+          inner.style.transform = `translate3d(${x}px, 0, 0)`
+        }
+      }
+    },
+    dropping (el, done) {
+      let rf = el.offsetHeight;
+      this.$nextTick(() => {
+        el.style.transform = `translate3d(0, 0, 0)`
+        let inner = el.getElementsByClassName('inner-hook')[0]
+        inner.style.transform = `translate3d(0, 0, 0)`
+        el.addEventListener('transitionend', done)
+      })
+    },
+    afterDrop (el) {
+      let ball = this.dropBalls.shift()
+      if (ball) {
+        ball.show = false
+        el.style.display = 'none'
+      }
     }
   }
 }
@@ -155,7 +222,6 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixin.styl"
-    
   .shopcart
     position fixed
     left 0
