@@ -44,7 +44,6 @@
                 <ul>
                     <!-- <li v-for="(rating,index) in ratings" :key="index"> -->
                     <li v-for="(rating,index) in filterRatings" :key="index">
-                        <!-- <span>{{item.username}}</span> -->
                         <div class="flex">
                             <div class="avatar">
                                 <img width="28" height="28" :src="rating.avatar" alt="">
@@ -113,17 +112,10 @@
             },
             setSelectType(selectType) {
                 this.selectType = selectType
-                /* this.$nextTick(() => {
-                   // 刷新列表的Scroll对象
-                   this.scroll.refresh()
-                 })*/
             },
             switchOnlyContent() {
                 this.onlyContent = !this.onlyContent
-                /* this.$nextTick(() => {
-                   // 刷新列表的Scroll对象
-                   this.scroll.refresh()
-                 })*/
+    
             }
         },
         computed: {
@@ -135,14 +127,10 @@
                     selectType,
                     onlyContent
                 } = this
-                // selectType: 0, 1, 2
-                // onlyContent: true false
                 return this.ratings.filter(rating => {
                     if (selectType === 2) {
-                        // 如果onlyContent为false, 直接返回true, 否则还要看text有没有值
                         return !onlyContent || !!rating.text
                     } else {
-                        // 既要比较type, 还要比较content
                         return selectType === rating.rateType && (!onlyContent || !!rating.text)
                     }
                 })
