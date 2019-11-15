@@ -7,7 +7,7 @@
       </p>
 
       <child @message="getMsg"></child> 
-      <!-- 收到子组件传来的方法，并定义一个方法 -->
+      <!-- 1.收到子组件传来的方法，并定义一个方法 -->
   </div>
 </template>
 
@@ -19,12 +19,12 @@ export default {
     },
     data() {
         return {
-            msg:'' //在数据源中定义
+            msg:'' //2.在数据源中定义
         }
     },
     methods: {
-        getMsg(e) {   //e就是子组件传来的数据
-            this.msg = e //赋值给数据源
+        getMsg(e) {   //3.e就是子组件传来的数据
+            this.msg = e //4.赋值给数据源
         }
     }
 }
