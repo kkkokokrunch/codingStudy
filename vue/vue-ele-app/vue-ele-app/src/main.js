@@ -6,6 +6,10 @@ import router from './router'
 import axios from 'axios'
 import './common/stylus/index.styl'
 import moment from 'moment'
+import Vant from 'vant';
+import 'vant/lib/index.css';
+
+Vue.use(Vant);
 // Vue.use(axios)
 Vue.prototype.$http = axios
 Vue.prototype.$moment = moment;

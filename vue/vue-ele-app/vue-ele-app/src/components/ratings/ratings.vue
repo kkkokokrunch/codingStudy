@@ -1,5 +1,5 @@
 <template>
-    <div class="ratings"  ref="ratWrapper">
+    <div class="ratings" ref="ratWrapper">
         <div class="ratings-content">
             <!-- 总评价 -->
             <div class="top">
@@ -11,13 +11,22 @@
                 <div class="top-right">
                     <div class="wrapper">
                         <div class="name">服务态度</div>
-                        <star :size="36" :score="seller.serviceScore"></star>
+                        <van-rate v-model="seller.serviceScore"  
+                        :size="16"
+                        color="#ff9900"  
+                        void-color="#eee" 
+                        allow-half 
+                        readonly />
                         <div class="score">{{seller.serviceScore}}</div>
                     </div>
                     <div class="wrapper">
                         <div class="name">商品评分</div>
-                        <!-- <star :size="36"></star> -->
-                        <star :size="36" :score="seller.foodScore"></star>
+                        <van-rate v-model="seller.foodScore"  
+                        :size="16"
+                        color="#ff9900"  
+                        void-color="#eee" 
+                        allow-half 
+                        readonly />
                         <div class="score">{{seller.foodScore}}</div>
                     </div>
                     <div class="time-wrapper">
@@ -29,11 +38,12 @@
             <!-- 灰色间隔 -->
             <interval></interval>
             <!-- 总评好评与差评数 -->
-            <manner :ratings="ratings"></manner>
-            <!-- 评论列表 -->
+            <manner :ratings="ratings" :only-content="onlyContent" :select-type="selectType" @setSelectType="setSelectType" @switchOnlyContent="switchOnlyContent"></manner>
+            
             <div class="rating-list">
                 <ul>
-                    <li v-for="(rating,index) in ratings" :key="index">
+                    <!-- <li v-for="(rating,index) in ratings" :key="index"> -->
+                    <li v-for="(rating,index) in filterRatings" :key="index">
                         <!-- <span>{{item.username}}</span> -->
                         <div class="flex">
                             <div class="avatar">
@@ -42,15 +52,20 @@
                             <div class="rating-main">
                                 <div class="username">{{rating.username}}</div>
                                 <div class="userdelivery">
-                                    <star :size="24" :score="rating.score"></star>
+                                    <van-rate v-model="rating.score"  
+                                    :size="10"
+                                    color="#ff9900"  
+                                    void-color="#eee" 
+                                    allow-half 
+                                    readonly />
                                     <span>{{rating.deliveryTime}}</span>
                                 </div>
                                 <div class="usertext">{{rating.text}}</div>
                                 <div class="recommend" v-show="rating.recommend.length">
                                     <span class="icon-thumb_up"></span>
                                     <span class="item" v-for="(item,index) in rating.recommend" :key="index">
-                                        {{item}}
-                                    </span>
+                                            {{item}}
+                                        </span>
                                 </div>
                             </div>
                         </div>
@@ -66,13 +81,11 @@
 
 <script>
     import BScroll from 'better-scroll'
-    import star from '../star/star'
     import interval from '../interval/interval'
     import manner from '../manner/manner'
     import moment from 'moment'
     export default {
         components: {
-            star,
             interval,
             manner
         },
@@ -83,7 +96,10 @@
         },
         data() {
             return {
-                ratings: []
+                ratings: [],
+                onlyContent: false,
+                selectType: 2,
+                value:3.5
             }
         },
         methods: {
@@ -95,6 +111,42 @@
                     click: true
                 })
             },
+            setSelectType(selectType) {
+                this.selectType = selectType
+                /* this.$nextTick(() => {
+                   // 刷新列表的Scroll对象
+                   this.scroll.refresh()
+                 })*/
+            },
+            switchOnlyContent() {
+                this.onlyContent = !this.onlyContent
+                /* this.$nextTick(() => {
+                   // 刷新列表的Scroll对象
+                   this.scroll.refresh()
+                 })*/
+            }
+        },
+        computed: {
+            filterRatings() {
+                if (!this.ratings) {
+                    return
+                }
+                const {
+                    selectType,
+                    onlyContent
+                } = this
+                // selectType: 0, 1, 2
+                // onlyContent: true false
+                return this.ratings.filter(rating => {
+                    if (selectType === 2) {
+                        // 如果onlyContent为false, 直接返回true, 否则还要看text有没有值
+                        return !onlyContent || !!rating.text
+                    } else {
+                        // 既要比较type, 还要比较content
+                        return selectType === rating.rateType && (!onlyContent || !!rating.text)
+                    }
+                })
+            }
         },
         created() {
             this.$http.get('http://localhost:8080/static/ratings.json')
@@ -156,7 +208,7 @@
                     font-size 12px
                     color #ff9900
                     line-height 18px
-                .star
+                .van-rate
                     margin: 0 12px   
             .time-wrapper
                 display flex
@@ -194,7 +246,7 @@
                     .userdelivery
                         display flex
                         margin 4px 0 6px 0
-                        .star
+                        .van-rate
                             margin-right 6px
                         span 
                             font-size 10px

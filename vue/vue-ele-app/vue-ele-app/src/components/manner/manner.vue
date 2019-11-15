@@ -1,17 +1,17 @@
 <template>
     <div class="manner">
-        <div class="top">
-            <div class="total">
-                全部<span>{{ratings.length}}</span>
-            </div>
-            <div class="satisfied">
-                满意<span>{{postive.length}}</span>
-            </div>
-            <div class="unsatisfied">
-                不满意<span>{{negtive.length}}</span>
-            </div>
+        <div class="rating-type border-1px">
+            <span class="block positive" :class="{active: selectType===2}" @click="setType(2, $event)">
+            全部<span class="count">{{ratings.length}}</span>
+            </span>
+            <span class="block positive" :class="{active: selectType===0}" @click="setType(0, $event)">
+            满意<span class="count">{{postive.length}}</span>
+            </span>
+            <span class="block negative" :class="{active: selectType===1}" @click="setType(1, $event)">
+           不满意<span class="count">{{negtive.length}}</span>
+            </span>
         </div>
-        <div class="choose">
+        <div class="choose" :class="{on: onlyContent}" @click="switchOnlyContent">
             <span class="icon-check_circle" :class="{grey: isshow,green: !isshow}" @click="isshow=!isshow"></span>
             <span class="choose-text">只看有内容的评价</span>
         </div>
@@ -33,6 +33,14 @@
                 default () {
                     return []
                 }
+            },
+            selectType: {
+                type: Number,
+                default: 2
+            },
+            onlyContent: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
@@ -48,63 +56,63 @@
             }
         },
         methods: {
-            // change() {
-            //     this.isActive = !this.isActive
-            // }
+            setType(type, event) {
+                this.$emit('setSelectType', type)
+            },
+            switchOnlyContent(event) {
+                this.$emit('switchOnlyContent')
+            }
         },
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
 @import "../../common/stylus/mixin.styl"
-.manner
-    .top
-        display flex
-        padding 18px 0
-        margin 0 18px
-        border-bottom 1px solid #e6e7e8
-        box-sizing border-box
-        .total
-            background-color #00a0dc
-            padding 8px 12px
-            color #ffffff
-            margin-right 8px
-            font-size 12px
-            span
-                font-size 8px
-        .satisfied
-            background-color #ccecf8
-            padding 8px 12px
-            color #4d555d
-            margin-right 8px
-            font-size 12px
-            span
-                font-size 8px
-        .unsatisfied
-            background-color #e9ebec
-            padding 8px 12px
-            color #4d555d
-            font-size 12px
-            span
-                font-size 8px
-    .choose
-        display flex
-        align-items: center
-        padding: 12px 18px
-        border-bottom 1px solid #e6e7e8
-        .icon-check_circle  
-            // color #b7bbbf
-            font-size 24px
-            line-height 24px
-        .grey
-            color #b7bbbf
-        .green
-            color #1bda32
-        .choose-text
-            margin-left 5px
-            font-size 12px
-            color #b7bbbf
-            line-height 24px
+    .manner
+        .rating-type
+            padding: 18px 0
+            margin: 0 18px
+            border-1px(rgba(7, 17, 27, 0.1))
+            font-size: 0
+            .block
+                display: inline-block
+                padding: 8px 12px
+                margin-right: 8px
+                line-height: 16px
+                border-radius: 1px
+                font-size: 12px
+                color: rgb(77, 85, 93)
+                &.active
+                    color: #fff
+                .count
+                    margin-left: 2px
+                    font-size: 8px
+                &.positive
+                    background: rgba(0, 160, 220, 0.2)
+                    &.active
+                        background: rgb(0, 160, 220)
+                &.negative
+                    background: rgba(77, 85, 93, 0.2)
+                    &.active
+                        background: rgb(77, 85, 93)
+        .choose
+            display flex
+            align-items: center
+            padding: 12px 18px
+            border-bottom 1px solid #e6e7e8
+            .icon-check_circle  
+                // color #b7bbbf
+                font-size 24px
+                line-height 24px
+            .grey
+                color #b7bbbf
+            .green
+                color #1bda32
+            .choose-text
+                margin-left 5px
+                font-size 12px
+                color #b7bbbf
+                line-height 24px
             
 
 </style>

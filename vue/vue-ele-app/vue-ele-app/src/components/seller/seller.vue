@@ -6,7 +6,12 @@
         <div class="detail-top">
           <span class="name">{{seller.name}}</span>
           <div class="rating">
-            <star :size="36" :score="seller.score"></star>
+             <van-rate v-model="seller.score"  
+              :size="16"
+              color="#ff9900"  
+              void-color="#eee" 
+              allow-half 
+              readonly />
             <span class="ratingCount text">{{seller.ratingCount}}</span>
             <span class="sellercount text">月售{{seller.sellCount}}单</span>
           </div>
@@ -77,12 +82,10 @@
 
 <script>
   import BScroll from 'better-scroll'
-  import star from '../star/star'
   import interval from '../interval/interval'
   import SupportIco from '../support-ico/support-ico'
   export default {
     components: {
-      star,
       interval,
       SupportIco
     },
@@ -177,7 +180,7 @@
       .rating
         display flex
         margin-top 8px
-        .star
+        .van-rate 
           margin-right 8px
           margin-bottom 18px
         .text
