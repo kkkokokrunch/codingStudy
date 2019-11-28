@@ -8,23 +8,26 @@
         <i class="icon">&#xe63c;</i>
       </router-link>
     </v-header>
-    <!-- tab  -->
+    <!-- Tab -->
     <v-tab></v-tab>
+    <side-bar></side-bar>
     <router-view/>
-    <v-sidebar></v-sidebar>
+    <v-play></v-play>
   </div>
 </template>
 
 <script>
-import header from './components/header'
-import sidebar from './components/sidebar'
-import tab from './components/tab'
+import header from '@/components/header'
+import sidebar from '@/components/sidebar'
+import tab from '@/components/tab'
+import play from '@/components/play'
 export default {
   name: 'App',
   components: {
     'v-header':header,
-    'v-sidebar':sidebar,
-    'v-tab':tab
+    'side-bar':sidebar,
+    'v-tab': tab,
+    'v-play': play
   }
 }
 </script>
@@ -40,14 +43,14 @@ export default {
 
 .icon
   font-family "icon" !important
-  font-size 18px
+  font-size 20px
   font-style normal
-  color #ffffff
+  color #090707
 html,body
   line-height 1
   font-family PingFang SC, STHeitiSC-Light, Helvetica-Light, arial, sans-serif
   user-select none
   -webkit-tap-highlight-color transparent
-  background rgba(8, 5, 58, 0.9)
-  color #fff
+  background #fff
+  color #000
 </style>

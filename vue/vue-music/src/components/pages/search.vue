@@ -1,79 +1,84 @@
 <template>
   <div class="search">
     <div class="search-box-wrapper">
-      <v-search-box @query="onQueryChange"></v-search-box>
+      <!-- 从子组件接受query方法并取名为onQueryChange -->
+      <v-search-box @query="onQueryChange" ref="searchBox"></v-search-box>
     </div>
     <!-- 热门搜索和搜索历史 -->
-    <div class="shortcut-wrapper">
+    <div class="shortcut-wrapper" v-show="!query">
       <v-scroll class="shortcut" :data="shortcut" ref="shortcut">
         <div>
           <!-- 热门搜索 -->
           <div class="hot-key">
             <h1 class="title">热门搜索</h1>
             <ul>
-              <li class="item" v-for="(item, index) in hotKey" :key='index'>
+              <li class="item" v-for="(item, index) in hotKey" :key="index">
                 <span>{{item.first}}</span>
               </li>
             </ul>
           </div>
-
-          <!-- 搜索历史 -->
+           <!-- 搜索历史 -->
           <div class="search-history">
             <h1 class="title">
               <span class="text">搜索历史</span>
-              <span class="clear">
+              <span class="clear" @click="deleteAllSearchHistory"> 
                 <i class="icon">&#xe612;</i>
               </span>
             </h1>
             <!-- 搜索历史列表 -->
-						<v-search-list :searches="searchHistory"></v-search-list>
+            <v-search-list :searches="searchHistory" @select="saveSearch" @delete="deleteSearchHistory"></v-search-list>
+            <!-- 搜索result -->
+            
           </div>
         </div>
       </v-scroll>
+    </div>
+    <div class="search-result" v-show="query">
+      <v-suggest :query="query" @select="saveSearch" @listScroll="blurInput" ref="suggest">
+      </v-suggest>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from  'vuex'
 import searchBox from '@/components/searchBox'
 import scroll from '@/components/scroll'
-import searchList from '../searchList'
 import api from '@/api'
-import {mapGetters} from 'vuex'
+import searchList from '@/components/searchList'
+import {searchMixin} from '@/common/mixin'
+import suggest from '@/components/suggest'
 export default {
-  data () {
+  components:{
+    'v-search-box':searchBox,
+    'v-scroll': scroll,
+    'v-search-list':searchList,
+    'v-suggest': suggest
+  },
+  data (){
     return {
       shortcut: [],
-			hotKey: [],
-			// searchHistory:[]
+      hotKey: []
     }
   },
-  components: {
-    'v-search-box': searchBox,
-		'v-scroll': scroll,
-		'v-search-list':searchList
-  },
+  mixins: [searchMixin],
   methods: {
-    onQueryChange (e) {
-      console.log(e)
-		},
-		_getHotKey() {
-			api.HotSearchKey().then((res) => {
-				// console.log(res)
-				if(res.code == 200) {
-					this.hotKey = res.result.hots.slice(0,10)
-				}
-			})
-		}    
-	},
-	computed: {
-		...mapGetters([
-			'searchHistory'
-		])
-	},
-	created () {
-		this._getHotKey()
-	}
+    _getHotKey (){
+      api.HotSearchKey().then((res) =>{
+        if(res.code == 200){
+          this.hotKey = res.result.hots.slice(0, 10)
+        }
+      })
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'searchHistory'
+    ])
+  },
+  created(){
+    this._getHotKey()
+  }
 }
 </script>
 
@@ -96,15 +101,17 @@ export default {
         .title
           margin-bottom px2rem(40px)
           font-size 14px
-          color hsla(0, 0%, 100%, 0.5)
+          // color hsla(10, 0%, 100%, 0.5)
         .item
           display inline-block
           padding px2rem(10px) px2rem(20px)
           margin 0 px2rem(20px) px2rem(20px) 0
           border-radius 6px
-          font-size 14px
-          color hsla(0, 0%, 100%, 0.3)
-          background #2f3054
+          font-size 12px
+          color #000
+          background #f0f5f9
+          span 
+            white-space 3px
       .search-history
         position relative
         margin 0 px2rem(40px)
@@ -113,12 +120,17 @@ export default {
           align-items center
           height px2rem(80px)
           font-size 14px
-          color hsla(0, 0%, 100%, 0.5)
+          // color hsla(0, 0%, 100%, 0.5)
           .text
             flex 1
           .clear
             .icon
               font-size 18px
-              color hsla(0, 0%, 100%, 0.3)
+              // color hsla(0, 0%, 100%, 0.3)
+  .search-result
+    position fixed
+    width 100%
+    top px2rem(360px)
+    bottom 0
 
 </style>

@@ -1,31 +1,39 @@
 <template>
   <div class="search-list">
-      <transition-group name="list" tag="ul">
-          <li class="search-item" v-for="item in searches" :key="item">
-              <span class="text">{{item}}</span>
-              <span class="icon-box">
-                  <i class="icon">&#xe656;</i>
-              </span>
-          </li>
-      </transition-group>
+    <transition-group name="list" tag="ul">
+      <li class="search-item" v-for="(item,index) in searches" :key="item" @click="selectItem(item)">
+        <span class="text">{{item}}</span>
+        <!-- 阻止冒泡 -->
+        <span class="icon-box" @click.stop="deleteOne(index)">
+          <i class="icon">&#xe656;</i>
+        </span>
+      </li>
+    </transition-group>
   </div>
 </template>
 
 <script>
 export default {
-    props: {
-        searches: {
-            type:Array,
-            default: () => {
-                return []
-            }
-        }
+  props: {
+    searches: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {
+    selectItem (item){
+      this.$emit('select', item)
     },
-    data() {
-        return {
-            // searches:['方大同']
-        }
-    },
+    deleteOne (index) {
+      this.$emit('delete', index)
+    }
+  }
 }
 </script>
 
@@ -47,11 +55,11 @@ export default {
 
     .text 
       flex 1
-      color hsla(0,0%,100%,.5)
+      // color hsla(0,0%,100%,.5)
     
 
     .icon-box 
       .icon 
         font-size 18px
-        color hsla(0,0%,100%,.3)
+        // color hsla(0,0%,100%,.3)
 </style>
