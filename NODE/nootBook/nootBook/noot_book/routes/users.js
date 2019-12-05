@@ -57,4 +57,95 @@ router.post('/userLogin', async(ctx, next) => {
         })
 })
 
+//注册
+router.post('/userRegister', async(ctx, next) => {
+    var username = ctx.request.body.username
+    var userpwd = ctx.request.body.userpwd
+    var nickname = ctx.request.body.nickname
+
+    if (!username || !userpwd || !nickname) {
+        ctx.body = {
+            code: '8000',
+            mess: '账号，密码和昵称不能为空'
+        }
+    }
+    let user = {
+        username: username,
+        userpwd: userpwd,
+        nickname: nickname
+    }
+
+    await userService.findUser(user.username)
+        .then(async(res) => {
+            if (res.length) {
+                try {
+                    throw Error('用户名已存在')
+                } catch (error) {
+                    console.log(error)
+                }
+                ctx.body = {
+                    code: '80003',
+                    data: 'err',
+                    mess: '用户名已存在'
+                }
+            } else {
+                await userService.insertUser([user.username, user.userpwd, user.nickname])
+                    .then((res) => {
+                        // console.log(res)
+                        let r = ''
+                        if (res.affectedRows !== 0) {
+                            r = 'ok'
+                            ctx.body = {
+                                code: '200',
+                                data: r,
+                                mess: '注册成功'
+                            }
+                        } else {
+                            r = 'error'
+                            ctx.body = {
+                                code: '500',
+                                data: r,
+                                mess: '注册失败'
+                            }
+                        }
+                    })
+                    .catch((err) => {
+                        ctx.body = {
+                            code: '500',
+                            data: err
+                        }
+                    })
+            }
+        })
+
+})
+
+//根据分类名称查找对应的笔记列表
+router.post('/findNoteListBytype', async(ctx, next) => {
+    let note_type = ctx.request.body.note_type
+    await userService.findNoteListBytype(note_type).then(async(res) => {
+            let r = ''
+            if (res.length) {
+                r = 'ok'
+                ctx.body = {
+                    code: '200',
+                    data: res,
+                    mess: '查询成功'
+                }
+            } else {
+                r = 'error'
+                ctx.body = {
+                    code: '404',
+                    data: r,
+                    mess: '查询失败'
+                }
+            }
+        })
+        .catch((err) => {
+            ctx.body = {
+                code: '500',
+                data: err
+            }
+        })
+})
 module.exports = router
