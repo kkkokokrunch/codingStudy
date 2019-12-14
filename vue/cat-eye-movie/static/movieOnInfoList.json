@@ -1,0 +1,277 @@
+{
+    "coming": [],
+    "movieIds": [
+        1251281,
+        1218273,
+        1238837,
+        1190122,
+        1203825,
+        1297995,
+        1217125,
+        1217041,
+        443387,
+        1228869,
+        247949,
+        1202038,
+        1258163,
+        1263827,
+        1132247,
+        605319,
+        1227006,
+        1277527,
+        1179339,
+        1257417,
+        1277644,
+        1292,
+        346825,
+        1220983,
+        1230121,
+        1250700,
+        1250662,
+        1301439
+    ],
+    "stid": "576591972453269000",
+    "stids": [{
+            "movieId": 1251281,
+            "stid": "576591972453269000_a1251281_c0"
+        },
+        {
+            "movieId": 1218273,
+            "stid": "576591972453269000_a1218273_c1"
+        },
+        {
+            "movieId": 1238837,
+            "stid": "576591972453269000_a1238837_c2"
+        },
+        {
+            "movieId": 1190122,
+            "stid": "576591972453269000_a1190122_c3"
+        },
+        {
+            "movieId": 1203825,
+            "stid": "576591972453269000_a1203825_c4"
+        },
+        {
+            "movieId": 1297995,
+            "stid": "576591972453269000_a1297995_c5"
+        },
+        {
+            "movieId": 1217125,
+            "stid": "576591972453269000_a1217125_c6"
+        },
+        {
+            "movieId": 1217041,
+            "stid": "576591972453269000_a1217041_c7"
+        },
+        {
+            "movieId": 443387,
+            "stid": "576591972453269000_a443387_c8"
+        },
+        {
+            "movieId": 1228869,
+            "stid": "576591972453269000_a1228869_c9"
+        },
+        {
+            "movieId": 247949,
+            "stid": "576591972453269000_a247949_c10"
+        },
+        {
+            "movieId": 1202038,
+            "stid": "576591972453269000_a1202038_c11"
+        }
+    ],
+    "total": 28,
+    "movieList": [{
+            "id": 1251281,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/movie/6e76513774a294aafeea8d5fa661f5902937606.jpg",
+            "version": "",
+            "nm": "被光抓走的人",
+            "preShow": false,
+            "sc": 0,
+            "globalReleased": true,
+            "wish": 41601,
+            "star": "黄渤,王珞丹,谭卓",
+            "rt": "2019-12-13",
+            "showInfo": "今天61家影院放映821场",
+            "showst": 3,
+            "wishst": 0
+        },
+        {
+            "id": 1218273,
+            "haspromotionTag": false,
+            "img": "http://p1.meituan.net/w.h/movie/967b253953bc7e660cfadbf9d78f67b62852693.jpg",
+            "version": "v2d imax",
+            "nm": "误杀",
+            "preShow": false,
+            "sc": 9.5,
+            "globalReleased": true,
+            "wish": 40632,
+            "star": "肖央,谭卓,陈冲",
+            "rt": "2019-12-13",
+            "showInfo": "今天61家影院放映706场",
+            "showst": 3,
+            "wishst": 0
+        },
+        {
+            "id": 1238837,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/movie/8ddef2a9924164a8203ae03424ba1c9e481975.jpg",
+            "version": "v3d",
+            "nm": "天·火",
+            "preShow": false,
+            "sc": 8,
+            "globalReleased": true,
+            "wish": 35322,
+            "star": "王学圻,昆凌,窦骁",
+            "rt": "2019-12-12",
+            "showInfo": "今天61家影院放映466场",
+            "showst": 3,
+            "wishst": 0
+        },
+        {
+            "id": 1190122,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/movie/4bfb08bfe0b8dd20776c6efc4015de6d995158.jpg",
+            "version": "",
+            "nm": "叶问4",
+            "preShow": false,
+            "sc": 0,
+            "globalReleased": false,
+            "wish": 249986,
+            "star": "甄子丹,吴樾,吴建豪",
+            "rt": "2019-12-20",
+            "showInfo": "2019-12-20 下周五上映",
+            "showst": 4,
+            "wishst": 0
+        },
+        {
+            "id": 1203825,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/movie/9282e84ad6bb1f3fcc8739561175c272397495.jpg",
+            "version": "",
+            "nm": "唐顿庄园",
+            "preShow": false,
+            "sc": 0,
+            "globalReleased": true,
+            "wish": 26749,
+            "star": "休·博纳维尔,劳拉·卡尔迈克尔,吉姆·卡特",
+            "rt": "2019-12-13",
+            "showInfo": "今天49家影院放映196场",
+            "showst": 3,
+            "wishst": 0
+        },
+        {
+            "id": 1297995,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/movie/aa10dea915717372fc0b36bc75a4a5a92888124.jpg",
+            "version": "",
+            "nm": "只有芸知道",
+            "preShow": true,
+            "sc": 0,
+            "globalReleased": false,
+            "wish": 14778,
+            "star": "黄轩,杨采钰,徐帆",
+            "rt": "2019-12-20",
+            "showInfo": "2019-12-20 下周五上映",
+            "showst": 4,
+            "wishst": 0
+        },
+        {
+            "id": 1217125,
+            "haspromotionTag": false,
+            "img": "http://p1.meituan.net/w.h/moviemachine/f4df6f9c2c55e347266e35027da415251124290.jpg",
+            "version": "v3d imax",
+            "nm": "勇敢者游戏2：再战巅峰",
+            "preShow": false,
+            "sc": 7.6,
+            "globalReleased": true,
+            "wish": 118081,
+            "star": "道恩·强森,凯伦·吉兰,杰克·布莱克",
+            "rt": "2019-12-06",
+            "showInfo": "今天43家影院放映138场",
+            "showst": 3,
+            "wishst": 0
+        },
+        {
+            "id": 1217041,
+            "haspromotionTag": false,
+            "img": "http://p1.meituan.net/w.h/movie/6d1a970c7fefb016006b0af099d8ff38867262.jpg",
+            "version": "",
+            "nm": "南方车站的聚会",
+            "preShow": false,
+            "sc": 7.8,
+            "globalReleased": true,
+            "wish": 170997,
+            "star": "胡歌,桂纶镁,廖凡",
+            "rt": "2019-12-06",
+            "showInfo": "今天44家影院放映124场",
+            "showst": 3,
+            "wishst": 0
+        },
+        {
+            "id": 443387,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/moviemachine/a34f5b6a7dd83a959520a9b3a88328d6186499.jpg",
+            "version": "v3d imax",
+            "nm": "星球大战：天行者崛起",
+            "preShow": true,
+            "sc": 0,
+            "globalReleased": false,
+            "wish": 37886,
+            "star": "马克·哈米尔,约翰·博耶加,戴夫·查普曼",
+            "rt": "2019-12-20",
+            "showInfo": "2019-12-20 下周五上映",
+            "showst": 4,
+            "wishst": 0
+        },
+        {
+            "id": 1228869,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/movie/a4af27ecc8ca48f4a68ed18326d4355c1251452.jpg",
+            "version": "",
+            "nm": "半个喜剧",
+            "preShow": false,
+            "sc": 0,
+            "globalReleased": false,
+            "wish": 17117,
+            "star": "任素汐,吴昱翰,刘迅",
+            "rt": "2019-12-20",
+            "showInfo": "2019-12-20 下周五上映",
+            "showst": 4,
+            "wishst": 0
+        },
+        {
+            "id": 247949,
+            "haspromotionTag": false,
+            "img": "http://p0.meituan.net/w.h/moviemachine/58ee13be6dc60bf5e636cf915bbbaaa55787785.jpg",
+            "version": "v3d imax",
+            "nm": "冰雪奇缘2",
+            "preShow": false,
+            "sc": 8.9,
+            "globalReleased": true,
+            "wish": 204361,
+            "star": "克里斯汀·贝尔,伊迪娜·门泽尔,乔纳森·格罗夫",
+            "rt": "2019-11-22",
+            "showInfo": "今天25家影院放映50场",
+            "showst": 3,
+            "wishst": 0
+        },
+        {
+            "id": 1202038,
+            "haspromotionTag": false,
+            "img": "http://p1.meituan.net/w.h/movie/e4427aa8ba0cae540eaddc4043552a8b1345381.jpg",
+            "version": "",
+            "nm": "金色荣耀",
+            "preShow": false,
+            "sc": 0,
+            "globalReleased": true,
+            "wish": 5526,
+            "star": "阿克谢·库玛尔,穆妮·罗伊,库纳尔·卡普尔",
+            "rt": "2019-12-13",
+            "showInfo": "今天17家影院放映42场",
+            "showst": 3,
+            "wishst": 0
+        }
+    ]
+}

@@ -3,11 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
-import { Toast } from './components/plugin/index'
-Vue.use(Toast)
+import Vant from 'vant';
+import 'vant/lib/index.css';
+import '../src/assets/css/iconfont.styl'
 Vue.config.productionTip = false
 
+Vue.use(Vant);
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
