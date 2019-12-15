@@ -1,0 +1,37 @@
+{
+  "id": "1562848",
+  "name": "movie",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2564554",
+      "name": "电影",
+      "font_class": "dianying",
+      "unicode": "e6cb",
+      "unicode_decimal": 59083
+    },
+    {
+      "icon_id": "7564989",
+      "name": "箭头",
+      "font_class": "jiantou",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "9120574",
+      "name": "我 的",
+      "font_class": "wode",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "11480383",
+      "name": "影院",
+      "font_class": "yingyuan",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    }
+  ]
+}
