@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import Vant from 'vant';
 import 'vant/lib/index.css';
-import './assets/iconfont/iconfont.css'
+import './assets/css/iconfont/iconfont.css'
 Vue.config.productionTip = false
 
 Vue.use(Vant);
