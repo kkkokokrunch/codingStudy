@@ -1,15 +1,45 @@
 <template>
   <div class="coming-soon">
-      即将上映
+      <div class="most-expected-wrapper">
+        <div class="font">近期最受期待</div>
+        <most-expected :mostExpected="mostExpected"></most-expected>
+      </div>
   </div>
 </template>
 
 <script>
-export default {
+import {getMostExpectedData} from '../../network/comingSoon'
+import MostExpected from '../../components/content/mostExpected/MostExpected'
 
+export default {
+  components: {
+    MostExpected
+  },
+  data() {
+    return {
+      mostExpected:[]
+    }
+  },
+ created() {
+    getMostExpectedData().then(res => {
+          console.log(res.moviecomings)
+          this.mostExpected = res.moviecomings
+		  // this.nowPlayingList = res.ms
+        })
+},
 }
 </script>
 
-<style>
+<style lang="stylus" scoped>
+.coming-soon
+	height 100%
+	overflow hidden
+	margin-top 100px
+	margin-bottom 50px
+	.most-expected-wrapper
+		padding-left 15px
+		padding-top 12px
+		padding-bottom 12px
 
+	
 </style>

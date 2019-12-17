@@ -1,10 +1,12 @@
 <template>
   <div class="movie">
         <nav-bar class="movie-nav"><div slot="center">猫眼电影</div></nav-bar>
-        <tab-control></tab-control>
+        <tab-control class="movie-tab-control"></tab-control>
+      
         <keep-alive>
           <router-view></router-view>
         </keep-alive>
+
   </div>
 </template>
 
@@ -31,7 +33,9 @@ export default {
       right 0
       top 0
       z-index 9
-    .tab-control
-      // margin-top 50px
-  
+    .movie-tab-control
+      position fixed
+      left 0
+      right 0
+      top 0
 </style>

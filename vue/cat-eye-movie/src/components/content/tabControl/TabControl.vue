@@ -23,11 +23,18 @@
   width 100%
   height 45px
   line-height 45px
+  background-color #fff
   border-bottom 1px solid #ececec
   display flex
   justify-content space-between
   align-items center
   margin-top 50px
+  box-sizing border-box
+  z-index 9999
+  // position fixed
+  // left 0
+  // right 0
+  // top 50px
   .city-name
     margin-left 20px
     

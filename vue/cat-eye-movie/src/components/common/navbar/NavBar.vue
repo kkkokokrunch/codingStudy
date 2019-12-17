@@ -13,18 +13,6 @@
 </script>
 
 <style lang="stylus" scoped>
-
-  // .nav-bar 
-  //   display flex
-  //   height 50px
-  //   line-height 50px
-  //   text-align center
-  //   box-shadow 0 1px 1px rgba(100,100,100,.1)
-  //   font-size 17px
-  //   .left, .right
-  //     width 60px
-  //   .center 
-  //     flex 1
   .nav-bar
     display flex
     height 50px
