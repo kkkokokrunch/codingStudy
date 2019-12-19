@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function a() {
+        //     var user = "张三"
+        //     console.log(this.user)
+        //     console.log(this)
+        // }
+        // a()
+        // window.a()
+        // var o = {
+        //     user: "张三",
+        //     fn: function() {
+        //         console.log(this.user)
+        //     }
+        // }
+        // o.fn()
+        // var o = {
+        //     user: "张三",
+        //     fn: function() {
+        //         console.log(this.user)
+        //     }
+        // }
+
+        // window.o.fn()
+        // var o = {
+        //     a: 10,
+        //     b: {
+        //         a: 12,
+        //         fn: function() {
+        //             console.log(this.a)
+        //         }
+        //     }
+        // }
+
+        var o = {
+            a: 10,
+            b: {
+                // a: 12,
+                fn: function() {
+                    console.log(this.a)
+                }
+            }
+        }
+        o.b.fn()
+    </script>
+</body>
+
+</html>
