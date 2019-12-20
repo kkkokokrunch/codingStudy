@@ -4,16 +4,19 @@
         <div class="font">近期最受期待</div>
         <most-expected :mostExpected="mostExpected"></most-expected>
       </div>
+      
+		<border></border>
   </div>
 </template>
 
 <script>
 import {getMostExpectedData} from '../../network/comingSoon'
 import MostExpected from '../../components/content/mostExpected/MostExpected'
-
+import Border from "../../components/content/border/Border"
 export default {
   components: {
-    MostExpected
+    MostExpected,
+    Border
   },
   data() {
     return {
