@@ -1,5 +1,7 @@
 <template>
-  
+  <div class="coming-movie-item">
+      
+  </div>
 </template>
 
 <script>

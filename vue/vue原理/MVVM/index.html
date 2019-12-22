@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- MVVM双向数据绑定 angular用脏值检测 vue用的是数据劫持+发布订阅模式 -->
+    <!-- vue不兼容集版本，因为用的是es5的Object.defineProperty -->
+    <script>
+        let obj = {}
+        Object.defineProperty(obj, 'school', {
+            configurable: true, //可删除
+            // writable:true,//可修改
+            enumerable: true, //可枚举
+            // value:'jxcd'
+            get() {},
+            set() {}
+        })
+    </script>
+</body>
+
+</html>
