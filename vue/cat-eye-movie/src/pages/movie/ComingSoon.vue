@@ -6,6 +6,7 @@
       </div>
       
 		<border></border>
+    <coming-movie-item :comingList="mostExpected"></coming-movie-item>
   </div>
 </template>
 
@@ -13,10 +14,12 @@
 import {getMostExpectedData} from '../../network/comingSoon'
 import MostExpected from '../../components/content/mostExpected/MostExpected'
 import Border from "../../components/content/border/Border"
+import ComingMovieItem from "../../components/content/comingMovieItem/ComingMovieItem"
 export default {
   components: {
     MostExpected,
-    Border
+    Border,
+    ComingMovieItem
   },
   data() {
     return {
@@ -36,7 +39,7 @@ export default {
 <style lang="stylus" scoped>
 .coming-soon
 	height 100%
-	overflow hidden
+	// overflow hidden
 	margin-top 100px
 	margin-bottom 50px
 	.most-expected-wrapper
