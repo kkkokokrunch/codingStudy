@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let xj = {name:'向军'} 
+        console.log(xj)
+
+
+        //这种方法创造出的对象没有原型
+        let hd = Object.create(null, {
+            name: {
+                value:'后盾'
+            }
+        })
+        console.log(hd)
+    </script>
+</body>
+</html>

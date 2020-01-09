@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //apply接收的参数必须是一个数组的形式
+        var o = {
+            name:'andy'
+        }
+        
+        function fn(arr) {
+            console.log(this)
+            console.log(arr)
+        }
+
+        fn.apply(o,['pink'])
+
+        var arr = [1,4,2,66,5]
+        var max = Math.max.apply(null,arr)
+        console.log(max)
+    </script>
+</body>
+</html>

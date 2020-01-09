@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button>点击</button>
+    <script>
+        //bind不会调用函数，参数接收和call一样
+        var o = {
+            name:'andy'
+        }
+        
+        function fn(arr) {
+            console.log(this)
+        }
+        var f = fn.bind(o)
+        f()
+
+        var btn = document.querySelector('button')
+        btn.onclick = function() {
+            this.disabled = true
+            setTimeout(function() {
+                this.disabled = false //定时器中的this指向的是window
+            }.bind(this),3000)
+        }
+    </script>
+</body>
+</html>
