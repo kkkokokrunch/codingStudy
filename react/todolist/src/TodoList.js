@@ -1,94 +1,34 @@
-import React, {Component, Fragment}from 'react';
-import './style.css'
-// import 'antd/dist/antd.css'; 
-// import {Input,Button} from 'antd';
-import TodoItem from './TodoItem'
-import axios from 'axios'
-//定义一个react组件
+import React, { Component } from 'react'
+import 'antd/dist/antd.css'
+import { Input, Button, List } from 'antd';
+
+const data = [
+  'Racing car sprays burning fuel into crowd.',
+  'Japanese princess to wed commoner.',
+  'Australian walks 100km after outback crash.',
+  'Man charged over missing wedding girl.',
+  'Los Angeles battles huge wildfires.',
+];
 class TodoList extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      inputValue: '',
-      list: []
-    }
-  }
-  //在组件即将被挂载到页面的时候自动执行
-  // componentWillMount() {
-  //   console.log('componentWillMount')
-  // }
-
-  //当一个组件的state或者props发生改变时,render函数会被重新执行
   render() {
-    console.log('render')
-    return (
-    <Fragment>
-      <div>
-        <label htmlFor="inputArea">输入内容</label>
-        <input 
-        id='inputArea'
-        className='input'
-        value = {this.state.inputValue}
-        onChange = {this.handleInputChange.bind(this)}
-        ref={(input)=> {this.input=input}}
-        />
-        <button onClick={this.handleBtnClick.bind(this)}>提交</button>
-      </div>
-        <ul>
-          {this.getTodoItem()}
-        </ul>
-    </Fragment>
-    )
-  }
-  //页面挂载之后执行,用来请求ajax数据
-  componentDidMount() {
-    axios.get('/api/todolist')
-    .then(()=> {
-      alert('success')
-    })
-    .catch(()=> {
-      alert('error')
-    })
-  }
-  getTodoItem() {
-    return this.state.list.map((item,index) => {
-      return (
+    return(
+      <div style={{marginTop: '10px', marginLeft: '10px'}}>
         <div>
-          <TodoItem
-            key={item}
-            content={item}
-            index={index}
-            deleteItem={this.handleItemDelete.bind(this)}></TodoItem>
+          <Input placeholder="Basic usage" style={{width: '300px', marginRight: '10px'}} />
+          <Button type="primary">提交</Button>
         </div>
-      )
-    })
-  }
-  handleInputChange(e) {
-    const value = e.target.value
-    this.setState(() => ({
-        inputValue: value
-    }))
-    // this.state.inputValue = e.target.value 
-    // console.log(e.target.value)
-  }
-
-  handleBtnClick() {
-    this.setState((prevState) => ({
-      list:[...prevState.list,prevState.inputValue],
-      inputValue:[]
-    })
-      
+        <List
+          style={{width: '300px', marginTop: '10px'}} 
+          bordered
+          dataSource={data}
+          renderItem={item => (
+            <List.Item>
+              {item}
+            </List.Item>
+          )}
+        />
+      </div>
     )
-  }
-
-  handleItemDelete(index) {//父组件接收到了子组件传递过来的index
-    //不要修改state中的内容，可以修改state的副本
-    const list = [...this.state.list]
-    list.splice(index,1)
-    this.setState({
-      list:list
-    })
   }
 }
-
-export default TodoList;
+export default TodoList
