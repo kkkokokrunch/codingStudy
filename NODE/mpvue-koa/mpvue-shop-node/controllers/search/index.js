@@ -1,7 +1,7 @@
 const {mysql} = require('../../mysql.js')
 
 async function indexAction(ctx) {
-    const openId = ctx.query.openId
+    const openId = ctx.query.openId//前端get通过路由拼接问号传来的用query
     // 默认关键字
     const defaultKeyword = await mysql('nideshop_keywords').where({
       is_default: 1
@@ -47,7 +47,7 @@ async function helperAction(ctx) {
 
 //添加搜索历史
 async function addHistoryAction(ctx) {
-    const {openId,keyword} = ctx.request.body
+    const {openId,keyword} = ctx.request.body //ctx.request.body是前端post传来的数据
     const oldData = await mysql('nideshop_search_history').where({
         'user_id':openId,
         'keyword':keyword

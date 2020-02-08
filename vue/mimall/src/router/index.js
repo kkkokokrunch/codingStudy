@@ -7,10 +7,10 @@ import Detail from '../pages/detail'
 import Login from '../pages/login'
 import Cart from '../pages/cart'
 import Order from '../pages/order'
-import List from '../pages/orderList'
-import Confirm from '../pages/orderConfirm'
-import Pay from '../pages/orderPay'
-import AliPay from '../pages/alipay'
+// import OrderList from '../pages/orderList'
+import OrderConfirm from '../pages/orderConfirm'
+// import OrderPay from '../pages/orderPay'
+// import Alipay from '../pages/alipay'
 Vue.use(Router);
 
 export default new Router({
@@ -25,16 +25,15 @@ export default new Router({
           path: '/index',
           name: 'index',
           component: Index,
-        }, {
-          path: '/product/:id',
-          name: 'product',
-          component: Product,
-          // component: () => import('./pages/product.vue')
-        }, {
-          path: '/detail/:id',
-          name: 'detail',
-          component: Detail,
-          // component: () => import('./pages/detail.vue')
+        },
+        {
+            path: '/product',
+            name: 'product',
+            component: Product,
+        },{
+            path: '/detail',
+            name: 'detail',
+            component: Detail,
         }
       ]
     },
@@ -53,26 +52,26 @@ export default new Router({
       name: 'order',
       component: Order,
       children:[
-        {
-          path: 'list',
-          name: 'order-list',
-          component: List,
-        },
+        // {
+        //   path: 'list',
+        //   name: 'order-list',
+        //   component: OrderList,
+        // },
         {
           path: 'confirm',
           name: 'order-confirm',
-          component: Confirm,
+          component: OrderConfirm,
         },
-        {
-          path: 'pay',
-          name: 'order-pay',
-          component: Pay,
-        },
-        {
-          path: 'alipay',
-          name: 'alipay',
-          component: AliPay,
-        }
+        // {
+        //   path: 'pay',
+        //   name: 'order-pay',
+        //   component: OrderPay,
+        // },
+        // {
+        //   path: 'alipay',
+        //   name: 'alipay',
+        //   component: Alipay,
+        // }
       ]
     }
   ]

@@ -47,7 +47,7 @@ module.exports = async (ctx) => {
       'goodsList': categoryGoods
     })
   }
-  ctx.body = {
+  ctx.body = { //ctx.response.body返回给前端的数据，可以在控制台中打印出来
     'banner': banner,
     'channel':channel,
     'brandList':brandList,

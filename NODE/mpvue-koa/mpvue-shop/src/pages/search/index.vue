@@ -94,6 +94,11 @@ export default {
       this.historyData = data.historyData
       this.hotData = data.hotKeywordList
       // console.log(data)
+    },
+    async getlistData() {
+      const data = await get('/search/helperaction', {
+        
+      })
     }
   }
 }
