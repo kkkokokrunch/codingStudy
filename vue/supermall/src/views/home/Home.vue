@@ -33,6 +33,7 @@
     getHomeMultidata,
     getHomeGoods
   } from '../../network/home'
+  import {itemListenerMixin} from '../../common/mixin'
   import {debounce} from '../../common/utils'
   import HomeSwiper from '../home/childComps/HomeSwiper'
   import RecommendView from '../home/childComps/RecommendView'
@@ -53,6 +54,7 @@
       Scroll,
       BackTop
     },
+    mixins:[itemListenerMixin],
     data() {
       return {
         banners: [],
@@ -62,12 +64,11 @@
             new: {page: 0, list: []},
             sell: {page: 0, list: []},
           },
-          // curType: "pop",
            currentType: 'pop',
            isShowBackTop:false,
            tabOffsetTop:0,
            isTabFixed:false,
-           saveY:0
+           saveY:0,
       }
     },
     computed: {
@@ -80,27 +81,19 @@
       this.$refs.scroll.refresh()
     },
     deactivated() {
+      //1.保存y值
       this.saveY = this.$refs.scroll.scroll.y
+
+      //2.取消全局事件的监听
+        this.$bus.$off('itemImageLoad',this.itemImgListener)
     },
     created() {
       this.getHomeMultidata(),
       this.getHomeGoods('pop'),
       this.getHomeGoods('new'),
       this.getHomeGoods('sell')
-
     },
-    mounted() {
-      //1.图片加载完成的事件监听
-      const refresh = debounce(this.$refs.scroll.refresh,200)
-      //3.监听item中图片加载完成
-      this.$bus.$on('itemImageLoad',() => {
-        // this.$refs.scroll.refresh()
-        refresh()
-      })
-
-      //2.获取tabControl的offsetTop
-
-    },
+    mounted() {},
       methods: {
       /**
        * 事件监听相关的方法
@@ -126,7 +119,7 @@
       },
       contentScroll(position) {
         //1.判断backtop是否显示
-       this.isShowBackTop = (-position.y) < 1000
+       this.isShowBackTop = (-position.y) > 1000
 
        //2.判断tabControl是否吸顶
         this.isTabFixed = (-position.y) > this.tabOffsetTop
@@ -143,6 +136,7 @@
       getHomeMultidata() {
         getHomeMultidata().then(res => {
           // this.result = res;
+          // console.log(res.data)
           this.banners = res.data.banner.list;
           this.recommends = res.data.recommend.list;
         })
@@ -165,6 +159,7 @@
     /* padding-top: 44px; */
     height: 100vh;
     position: relative;
+    box-sizing: border-box;
   }
   .home-nav {
     background-color: var(--color-tint);

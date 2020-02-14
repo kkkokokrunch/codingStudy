@@ -31,7 +31,7 @@ const mutations = { //相当于methods
         state.info.name = 'code'
     }
 }
-const getters = {
+const getters = { //类似计算属性
     powerCounter(state) {
         return state.counter * state.counter
     },

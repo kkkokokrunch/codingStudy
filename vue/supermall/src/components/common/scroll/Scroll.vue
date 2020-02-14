@@ -40,9 +40,12 @@ export default {
 
         // this.scroll.refresh()
         // 3.监听上拉事件
-        this.scroll.on('pullingUp',() => {
-            this.$emit('pullingUp')
-        })
+        if(this.pullUpLoad) {
+            this.scroll.on('pullingUp',() => {
+                this.$emit('pullingUp')
+            })
+        }
+        
     },
     methods: {
         scrollTo(x,y,time=300) {
