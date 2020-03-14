@@ -1,34 +1,77 @@
-import React, { Component } from 'react'
-import 'antd/dist/antd.css'
-import { Input, Button, List } from 'antd';
+import React, { Component,Fragment }from 'react';
+import TodoItem from  './TodoItem'
+import './style.css'
 
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-];
 class TodoList extends Component {
-  render() {
-    return(
-      <div style={{marginTop: '10px', marginLeft: '10px'}}>
-        <div>
-          <Input placeholder="Basic usage" style={{width: '300px', marginRight: '10px'}} />
-          <Button type="primary">提交</Button>
-        </div>
-        <List
-          style={{width: '300px', marginTop: '10px'}} 
-          bordered
-          dataSource={data}
-          renderItem={item => (
-            <List.Item>
-              {item}
-            </List.Item>
-          )}
-        />
-      </div>
-    )
-  }
+	constructor(props) {
+		super(props)
+		this.state = {
+			inputValue:'',
+			list:[]
+		}
+		this.handleInputChange = this.handleInputChange.bind(this)
+		this.handleBtnClick = this.handleBtnClick.bind(this)
+	 	this.handleItemDelete = this.handleItemDelete.bind(this)
+	}
+	render() {
+		return (
+			<Fragment>
+				<div>
+					<label htmlFor="insertArea">输入内容</label>
+					<input 
+					id='insertArea'
+					className='input'
+					value={this.state.inputValue}
+					onChange={this.handleInputChange}
+					ref={(input) => {this.input = input}}
+					/>
+					<button onClick={this.handleBtnClick}>提交</button>
+					<ul>
+						{this.getTodoItem()}
+					</ul>
+				</div>
+			</Fragment>
+			
+		)
+	}
+	getTodoItem() {
+		return this.state.list.map((item,index) => {
+			return (
+				<div key={index}>
+					{/* content和index都是父组件传给子组件的值 */}
+					<TodoItem 
+					content={item} 
+					index={index}
+					deleteItem={this.handleItemDelete}
+					/>
+				</div>
+			
+			)
+		})
+	}
+	handleInputChange(e) {
+		// const value = e.target.value
+		//使用ref获取put元素
+		const value = this.input.value
+		this.setState(() => ({
+				inputValue: value
+		}))
+	}
+	handleBtnClick() {
+		//prevState相当于this.state
+		this.setState((prevState) => ({
+			list:[...this.state.list,this.state.inputValue],
+			inputValue:''
+		}))
+	}
+	//要传递给子组件的方法
+	handleItemDelete(index) {
+		this.setState((prevState) => {
+			const list = [...prevState.list]
+			list.splice(index,1)
+			return {list}
+		})
+	}
 }
-export default TodoList
+
+export default TodoList;
