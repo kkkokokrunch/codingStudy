@@ -8,7 +8,7 @@ import 'amfe-flexible'
 import { Swipe, SwipeItem, Icon, Field, ActionSheet, Toast, Panel, Uploader } from 'vant';
 import 'vant/lib/index.css';
 
-Vue.use(Swipe).use(SwipeItem).use(Icon).use(Field).use(ActionSheet).use(Toast).use(Panel).use(Uploader).use(axios)
+Vue.use(Swipe).use(SwipeItem).use(Icon).use(Field).use(ActionSheet).use(Toast).use(Panel).use(Uploader)
     //use的作用：在 Vue 的 prototype 上挂载这些方法，便于在组件内调用。
 Vue.prototype.$http = axios
 

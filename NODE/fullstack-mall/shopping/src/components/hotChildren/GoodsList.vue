@@ -1,5 +1,6 @@
 <template>
 	<div class="goodslist">
+		<!-- <div>{{goods}}</div> -->
 		<ul v-for="(item,index) in goods" :key="index">
 			<li>
 				<img :src="item.hd_thumb_url" alt="">
@@ -33,7 +34,7 @@
 			}
 		},
 		created() {
-			console.log(this.goods)
+			// console.log(this.goods)
 		},
 	}
 </script>

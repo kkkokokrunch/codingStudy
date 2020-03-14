@@ -1,5 +1,10 @@
 <template>
   <div id="detail">
+      <!-- <ul>
+          <li v-for="(item,index) in $store.state.cartList" :key="index">
+              {{item}}
+          </li>
+      </ul> -->
       <detail-nav-bar class="detail-nav" ref="nav" @titleClick="titleClick"></detail-nav-bar>
       <scroll class="content" ref="scroll" @scroll="contentScroll" :probe-type="3">
         <detail-swiper :top-images='topImages'></detail-swiper>
@@ -12,6 +17,7 @@
       </scroll>
         <back-top @click.native="backClick" v-show="isShowBackTop">fanhui</back-top>
         <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
+        <toast message="hahaha"/>
   </div>
 </template>
 
@@ -32,6 +38,8 @@ import Scroll from '../../components/common/scroll/Scroll'
 import {getDetail,Goods,Shop,GoodsParams,getRecommend} from '../../network/detail'
 import {debounce} from '../../common/utils'
 import {itemListenerMixin,backTopMixin} from '../../common/mixin'
+import {mapActions} from 'vuex'
+import Toast from '../../components/common/toast/Toast'
 export default {
     name:'Detail',
     components: {
@@ -44,7 +52,8 @@ export default {
         DetailParamInfo,
         DetailCommentInfo,
         GoodsList,
-        DetailBottomBar
+        DetailBottomBar,
+        Toast
     },
     mixins:[itemListenerMixin,backTopMixin],
     data() {
@@ -83,6 +92,7 @@ export default {
         this.$bus.$off('itemImageLoad',this.itemImgListener)
     },
     methods: {
+        ...mapActions(['addCart']),
         imageLoad() {
             this.$refs.scroll.refresh()
             this.themeTopYs = [] 
@@ -91,11 +101,11 @@ export default {
             this.themeTopYs.push(this.$refs.comment.$el.offsetTop-50)
             this.themeTopYs.push(this.$refs.recommend.$el.offsetTop-50)
             this.themeTopYs.push(Number.MAX_VALUE)
-            console.log(this.themeTopYs)
+            // console.log(this.themeTopYs)
         },
         getDetail() {
             getDetail(this.iid).then(res => {
-                console.log(res)
+                // console.log(res)
                 const data = res.result
                 //1.获取顶部轮播数据
                 this.topImages = data.itemInfo.topImages
@@ -128,7 +138,7 @@ export default {
         },
         
         titleClick(index) {
-            console.log(index)
+            // console.log(index)
             this.$refs.scroll.scrollTo(0,-(this.themeTopYs[index]),100)
         },
         contentScroll(position) {
@@ -154,7 +164,11 @@ export default {
             product.iid = this.iid
 
             //2.将商品加到购物车
-            this.$store.dispatch('addCart',product)
+            this.$store.dispatch('addCart',product).then(res => {
+                console.log(res)
+            })
+            
+            // console.log(product)
         }
     },
     

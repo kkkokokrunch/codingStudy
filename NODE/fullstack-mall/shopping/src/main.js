@@ -5,9 +5,10 @@ import store from './store'
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import LyTab from 'ly-tab'
+import './assets/iconfont/iconfont.css'
 
 Vue.use(LyTab)
-Vue.use(Vant);
+Vue.use(Vant)
 Vue.config.productionTip = false
 
 new Vue({

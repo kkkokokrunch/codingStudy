@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <router-view/>
-    <main-tab-bar></main-tab-bar>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+    <main-tab-bar v-show="$route.meta.showTabBar"></main-tab-bar>
   </div>
 </template>
 
@@ -10,7 +12,11 @@ import MainTabBar from './components/mainTabbar/mainTabbar'
 export default {
   components: {
     MainTabBar
-  }
+  },
+  // created() {
+  //   this.$store.dispatch('getUserInfo')
+  // }
+    
 }
 </script>
 <style>

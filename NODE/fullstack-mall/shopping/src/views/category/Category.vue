@@ -1,52 +1,44 @@
 <template>
   <div class="category">
       <search-bar class="header"></search-bar>
-
       <div class="shop">
         <!-- 左边 -->
-        <div class="menu-wrapper">
+        <div class="menu-wrapper" ref="menuWrapper">
           <ul>
-            <li class="menu-item current">
-              <span>女装</span>
-            </li>
-            <li class="menu-item">
-              <span>鞋包</span>
+            <!-- current -->
+            <li class="menu-item" 
+            v-for="(goods,index) in searchGoods" 
+            :key="index"
+            :class="{current:index === currentIndex}"
+            @click="clickLeftItem(index)"
+            ref="menulist">
+              <span>{{goods.name}}</span>
             </li>
           </ul>
         </div>
         <!-- 右边 -->
-        <div class="shop-wrapper">
-          <ul>
-            <li class="shops-li">
+        <div class="shop-wrapper" ref="shopWrapper">
+          <ul ref="shopsParent">
+            <li class="shops-li" v-for="(goods,index1) in searchGoods" :key="index1">
               <div class="shops-title">
-                <span>女装</span>    
+                <span>{{goods.name}}</span>    
               </div>
+              <!-- banner -->
+              <div v-show="goods.banner" class="shop-banner">
+                <img :src="goods.banner" alt="">
+              </div>
+              <!-- 手机品牌 -->
+              <ul class="phone-type" v-if="goods.tag === 'phone'">
+                <li v-for="(phone,index) in goods.category" :key="index">
+                  <img :src="phone.icon" alt="">
+                </li>
+              </ul>
               <ul class="shops-items">
-                <li>
-                  <img src="https://t00img.yangkeduo.com/goods/images/2019-07-17/c7975c83-72d6-466d-a2cc-6fe42faffefa.jpg" alt="">
-                  <span>女装</span>
+                <li v-for="(item,index2) in goods.items" :key="index2">
+                  <img :src="item.icon">
+                  <span>{{item.title}}</span>
                 </li>
-                  <li>
-                  <img src="https://t00img.yangkeduo.com/goods/images/2019-07-17/c7975c83-72d6-466d-a2cc-6fe42faffefa.jpg" alt="">
-                  <span>女装</span>
-                </li>
-                <li>
-                  <img src="https://t00img.yangkeduo.com/goods/images/2019-07-17/c7975c83-72d6-466d-a2cc-6fe42faffefa.jpg" alt="">
-                  <span>女装</span>
-                </li>
-                <li>
-                  <img src="https://t00img.yangkeduo.com/goods/images/2019-07-17/c7975c83-72d6-466d-a2cc-6fe42faffefa.jpg" alt="">
-                  <span>女装</span>
-                </li>
-                <li>
-                  <img src="https://t00img.yangkeduo.com/goods/images/2019-07-17/c7975c83-72d6-466d-a2cc-6fe42faffefa.jpg" alt="">
-                  <span>女装</span>
-                </li>
-                <li>
-                  <img src="https://t00img.yangkeduo.com/goods/images/2019-07-17/c7975c83-72d6-466d-a2cc-6fe42faffefa.jpg" alt="">
-                  <span>女装</span>
-                </li>
-                </ul>
+              </ul>
             </li>
           </ul>
         </div>
@@ -56,11 +48,94 @@
 
 <script>
 import SearchBar from '../../components/searchBar/SearchBar'
+import {getSearchdata} from '../../network/category'
+import BScroll from 'better-scroll'
 export default {
     name:'Category',
     components: {
       SearchBar
+    },
+    data() {
+      return {
+        searchGoods:[],
+        scrollY:0,
+        rightLiTops:[]
+      }
+    },
+    created() {
+      this.getSearchdata()
+    },
+    watch: {
+      searchGoods() {
+        this.$nextTick(() => {
+          this._initBScroll()
+          this._initRightLiTops()
+        })
+      }
+    },
+    computed: {
+      currentIndex() {
+        const {scrollY,rightLiTops} = this;
+        //取出索引
+        return rightLiTops.findIndex((liTop,index) => {
+          this._leftScroll(index)
+          return scrollY >= liTop && scrollY < rightLiTops[index + 1]
+        })
+      }
+    },
+    methods: {
+      getSearchdata() {
+        getSearchdata().then(res => {
+          this.searchGoods = res.data
+          // console.log(res)
+        })
+      },
+      _initBScroll() {
+        this.leftScroll = new BScroll(this.$refs.menuWrapper, {
+          scrollY:true,
+          click:true
+        })
+        this.rightScroll = new BScroll(this.$refs.shopWrapper, {
+          scrollY:true,
+          click:true,
+          probeType:3
+        })
+        //监听右侧滑动事件
+        this.rightScroll.on('scroll',(pos) => {
+          this.scrollY = Math.abs(pos.y)
+          // console.log(this.scrollY)
+          // console.log(this.rightLiTops)
+        })
+      },
+      _initRightLiTops() {
+        //临时数组
+        const tempArr = []
+        //定义变量记录高度
+        let top = 0
+        tempArr.push(top)
+        //遍历li标签，取出高度
+        let allLis = this.$refs.shopsParent.getElementsByClassName('shops-li')
+        // console.log(allLis)
+        Array.prototype.slice.call(allLis).forEach(li => {
+          top += li.clientHeight
+          tempArr.push(top)
+        })
+        //更新数据
+        this.rightLiTops = tempArr;
+      },
+      //点击切换
+    clickLeftItem(index) {
+      this.scrollY = this.rightLiTops[index]
+      this.rightScroll.scrollTo(0,-this.scrollY,300)
+    },
+    //左侧联动
+    _leftScroll(index) {
+      let menulists = this.$refs.menulist
+      let el = menulists[index]
+      this.leftScroll.scrollToElement(el,300,0,-100)
     }
+    },
+    
 }
 </script>
 
@@ -124,6 +199,31 @@ export default {
   justify-content: space-between;
   color: #151516;
   font-size: 15px;
+}
+.shop .shop-wrapper .shop-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shop .shop-wrapper .shop-banner img{
+  width: 90%;
+}
+.shop .shop-wrapper .phone-type {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #f4f4f4;
+}
+.shop .shop-wrapper .phone-type li {
+  width: 33.3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0;
+}
+.shop .shop-wrapper .phone-type li img {
+  width: 70%;
 }
 .shop .shop-wrapper .shops-items {
   display: flex;

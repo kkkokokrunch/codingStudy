@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 1.app.message修改数据，vue内部是如何监听message数据的改变？
+    1是因为Object.defineProperty
+  2.当数据发生改变时，vue是如何知道要通知哪些人，界面发生刷新？
+    2.是因为发布订阅模式 -->
+    <div>
+      {{message}}
+      {{message}}
+      {{message}}
+    </div>
+    <script>
+      const obj = {
+        message:'哈哈哈',
+        name:'张三'
+      }
+      Object.keys(obj).forEach(key => {
+        let value = obj[key]
+        Object.defineProperty(obj,key,{
+          set(newValue) {
+            // 监听到值的改变以后，应该通知那些使用了这个值的人
+            // 根据解析html代码，获取到哪些人有用属性（张三、李四、王五）
+            // 这时就应该使用发布订阅模式
+            console.log(`监听${key}改变`)
+            value = newValue
+          },
+          get() {
+            //张三：get
+            //李四：get
+            //王五：get
+            console.log(`获取${key}对应的值`)
+            return value
+          }
+        })
+      })
+      
+      //发布订阅模式
+
+      //发布者
+      class Dep {
+        constructor() {
+          //记录所有订阅者
+          this.subs = []
+        }
+
+        addSub(watcher) { //将所有订阅者添加到subs中
+          this.subs.push(watcher)
+        }
+
+        notify() { //一旦调用notify,就通知所有订阅者发生了更新
+          this.subs.forEach(item => {
+            item.update()
+          })
+        }
+      }
+
+      //订阅者
+      class Watcher {
+        constructor(name) {
+          this.name = name
+        }
+
+        update() {
+          console.log(this.name+'发生update')
+        }
+      }
+      const dep = new Dep()
+
+      const w1 = new Watcher('张三')
+      dep.addSub(w1)
+      const w2 = new Watcher('李四')
+      dep.addSub(w2)
+      const w3 = new Watcher('王五')
+      dep.addSub(w3)
+    </script>
+</body>
+</html>

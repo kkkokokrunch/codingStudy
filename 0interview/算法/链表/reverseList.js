@@ -3,7 +3,7 @@ var reverseList  = function(head) {
     let pre = null
     while(cur != null) {
         let next = cur.next
-        pre = cur.next
+        cur.next = pre
         pre = cur
         cur = next
     }

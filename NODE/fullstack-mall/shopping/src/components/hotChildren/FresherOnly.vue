@@ -47,8 +47,9 @@ export default {
     methods: {
         getFresherdata() {
             getFresherdata().then(res => {
+                // console.log(res)
                 // console.log(res.data[0])
-                this.fresherTwo = res.data.splice(0,2)
+                this.fresherTwo = res.fresher.data.splice(0,2)
                 // console.log(this.fresherTwo)
             })
       },

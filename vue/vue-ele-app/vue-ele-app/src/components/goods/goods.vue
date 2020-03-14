@@ -48,108 +48,109 @@
 </template>
 
 <script>
-  import BScroll from 'better-scroll'
-  import shopcart from '@/components/shopcart/shopcart'
-  import cartcontrol from '@/components/cartcontrol/cartcontrol'
-  export default {
-    name: 'Goods',
-    props: {
-      seller: {
-        type: Object
-      }
-    },
-    data() {
-      return {
-        goods: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
-        listHeight: [],
-        scrollY: 0
-      }
-    },
-    components: {
-      shopcart,
-      cartcontrol
-    },
-    created() {
-      this.$http.get('http://localhost:8080/static/goods.json')
-        .then((res) => {
-          console.log(res)
-          if (res.data.errno == 0) {
-            this.goods = res.data.data
-            this.$nextTick(() => {
-              this._initScroll()
-              this._calculateHeight()
-            })
-          }
-        })
-    },
-    computed: {
-      currentIndex() {
-        for (let i = 0; i < this.listHeight.length; i++) {
-          let height1 = this.listHeight[i]
-          let height2 = this.listHeight[i + 1]
-          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-            return i
-          }
+import BScroll from 'better-scroll'
+import shopcart from '@/components/shopcart/shopcart'
+import cartcontrol from '@/components/cartcontrol/cartcontrol'
+export default {
+  name: 'Goods',
+  props: {
+    seller: {
+      ype: Object
+    }
+  },
+  data () {
+    return {
+      goods: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
+      listHeight: [],
+      scrollY: 0
+    }
+  },
+  components: {
+    shopcart,
+    cartcontrol
+  },
+  created () {
+    this.$http.get('http://localhost:8080/static/goods.json')
+      .then((res) => {
+        console.log(res)
+        if (res.data.errno == 0) {
+          this.goods = res.data.data
+          this.$nextTick(() => {
+            this._initScroll()
+            this._calculateHeight()
+          })
         }
-        return 0
-      },
-      selectFoods() {
-        let foods = [];
-        for (let good of this.goods) {
-          if (good.foods) {
-            for (let food of good.foods) {
-              if (food.count) {
-                foods.push(food)
-              }
+      })
+  },
+  computed: {
+    currentIndex () {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let height1 = this.listHeight[i]
+        let height2 = this.listHeight[i + 1]
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          return i
+        }
+      }
+      return 0
+    },
+    selectFoods () {
+      let foods = [] 
+      for (let good of this.goods) {
+        if (good.foods) {
+          for (let food of good.foods) {
+            if (food.count) {
+              foods.push(food)
             }
           }
         }
-        return foods
+      }
+      return foods
+    }
+  },
+  methods: {
+    _initScroll () {
+      this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      })
+      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+        click: true,
+        probeType: 3
+      })
+      this.foodsScroll.on('scroll', pos => {
+        // console.log(pos)
+        this.scrollY = Math.abs(Math.round(pos.y))
+      })
+    },
+    selectMenu (idx) {
+      console.log(idx)
+      // this.currentIndex = idx
+      let foodList = this.$refs.foodList
+      let el = foodList[idx]
+      this.foodsScroll.scrollToElement(el, 300)
+    },
+    _calculateHeight () {
+      let foodList = this.$refs.foodList
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < foodList.length; i++) {
+        let item = foodList[i]
+        height += item.clientHeight
+        this.listHeight.push(height)
       }
     },
-    methods: {
-      _initScroll() {
-        this.menuScroll = new BScroll(this.$refs.menuWrapper, {
-          click: true
-        })
-        this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
-          click: true,
-          probeType: 3
-        })
-        this.foodsScroll.on("scroll", pos => {
-          // console.log(pos)
-          this.scrollY = Math.abs(Math.round(pos.y))
-        })
-      },
-      selectMenu(idx) {
-        console.log(idx)
-        // this.currentIndex = idx
-        let foodList = this.$refs.foodList
-        let el = foodList[idx]
-        this.foodsScroll.scrollToElement(el, 300)
-      },
-      _calculateHeight() {
-        let foodList = this.$refs.foodList
-        let height = 0
-        this.listHeight.push(height)
-        for (let i = 0; i < foodList.length; i++) {
-          let item = foodList[i]
-          height += item.clientHeight
-          this.listHeight.push(height)
-        }
-      },
-      addFood(target) {
-        this._drop(target)
-      },
-      _drop(target) {
-        // 体验优化，异步执行下落动画
-        this.$nextTick(() => {
-          this.$refs.shopcart.drop(target) //父组件调用子组件内部的方法
-        })
-      }
+    addFood (target) {
+      this._drop(target)
+    },
+    _drop (target) {
+      // 体验优化，异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target)
+        // 父组件调用子组件内部的方法
+      })
     }
   }
+}
 </script>
 
 <style lang="stylus" scoped>

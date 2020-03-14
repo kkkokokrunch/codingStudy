@@ -1,13 +1,11 @@
 <template>
   <div class="hot">
-    <home-swiper :banners="banners"/>
-    <hot-nav></hot-nav>
-    <grey-line></grey-line>
-    <fresher-only></fresher-only>
-    <grey-line></grey-line>
-    <goods-list :goods="goods"></goods-list>
-    <ul>
-    </ul>
+      <home-swiper :banners="banners"/>
+      <hot-nav :navs="navs"></hot-nav>
+      <grey-line></grey-line>
+      <fresher-only></fresher-only>
+      <grey-line></grey-line>
+      <goods-list :goods="goods"></goods-list>
   </div>
 </template>
 
@@ -17,7 +15,7 @@ import HotNav from '../../../components/hotChildren/HotNav'
 import greyLine from '../../../components/greyLine'
 import FresherOnly from '../../../components/hotChildren/FresherOnly'
 import GoodsList from '../../../components/hotChildren/GoodsList'
-import {getBannersdata,getGoodesdata} from '../../../network/home'
+import {getBannersdata,getNavdata,getGoodesdata,insertUser} from '../../../network/home'
 
 export default {
     name:'Hot',
@@ -31,23 +29,33 @@ export default {
     data() {
       return {
         banners:[],
-        goods:[]
+        navs:[],
+        goods:[],
+        
       }
     },
     created() {
       this.getBannersdata()
+      this.getNavdata()
       this.getGoodesdata()
     },
     methods: {
       getBannersdata() {
         getBannersdata().then(res => {
-          this.banners = res.data
+          // this.banners = res.data
+           this.banners = res
+        })
+      },
+      getNavdata() {
+        getNavdata().then(res => {
+          this.navs = res
+          // console.log(res)
         })
       },
       getGoodesdata() {
         getGoodesdata().then(res => {
-          this.goods = res
-          // console.log(this.goods)
+          this.goods = res.goods
+          console.log(res)
         })
       }
     },
@@ -59,4 +67,5 @@ export default {
   margin-top: 95px;
   margin-bottom: 55px;
 }
+
 </style>

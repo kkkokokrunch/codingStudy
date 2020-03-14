@@ -2,74 +2,10 @@
   <div class="hot-nav">
       <div class="hot-nav-content">
           <div class="nav-content-inner">
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
+              <a href="" class="inner-item" v-for="(item,index) in navs" :key="index">
+                  <img :src="item.imgUrl" alt="">
+                  <span>{{item.title}}</span>
               </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-              <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-               <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-               <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-               <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-               <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-               <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a>
-               <!-- <a href="" class="inner-item">
-                  <img src="../../assets/images/nav.webp" alt="">
-                  <span>限时秒杀</span>
-              </a> -->
           </div>
       </div>
       <div class="hot-nav-bottom">
@@ -81,6 +17,12 @@
 <script>
 export default {
     name:'HotNav',
+    props: {
+        navs: {
+            type:Array,
+            default:[]
+        }
+    },
     data() {
         return {
             screenW:window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth,
