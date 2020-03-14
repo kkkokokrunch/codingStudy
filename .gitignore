@@ -60,3 +60,4 @@ typings/
 # next.js build output
 .next
 vue/vue-music-app.rar
+vue/vue-music/NeteaseCloudMusicApi/NeteaseCloudMusicApi/
