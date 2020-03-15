@@ -1,23 +1,30 @@
+import {CHANGE_INPUT_VALUE,ADD_TODO_ITEM, DELETE_TODO_ITEM} from './actionTypes'
+
 //所有数据由reducer管理
 const defaultState = {
-  inputValue:'123',
-  list:[1,2]
+  inputValue:'',
+  list:[]
 }
 
 //reducer可以接受state，不能修改state，所以要拷贝一份state
 export default (state = defaultState,action) => {
-  if(action.type === 'change_input_value') {
+  if(action.type === CHANGE_INPUT_VALUE) {
     //所以要拷贝一份state,对拷贝出来的newState做修改
     const newState = JSON.parse(JSON.stringify(state))
     newState.inputValue = action.value
     return newState
   }
-  if(action.type === 'add_todo_item') {
+  if(action.type === ADD_TODO_ITEM) {
     const newState = JSON.parse(JSON.stringify(state))
     newState.list.push(newState.inputValue)
     newState.inputValue = ''
     return newState
   }
-  console.log(state,action) //state指的是之前保存的数据，action指的是diapatch来的那句话
+  if(action.type === DELETE_TODO_ITEM) {
+    const newState = JSON.parse(JSON.stringify(state))
+    newState.list.splice(action.index,1)
+    return newState
+  }
+  // console.log(state,action) //state指的是之前保存的数据，action指的是diapatch来的那句话
   return state
 }
