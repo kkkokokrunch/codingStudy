@@ -1,0 +1,13 @@
+{
+  "name": "webpack-demo",
+  "version": "1.0.0",
+  "description": "demo",
+  "private": true,
+  "scripts": {},
+  "author": "xuzh",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
