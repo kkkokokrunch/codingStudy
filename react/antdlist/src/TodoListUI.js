@@ -1,6 +1,7 @@
 import React,{Component} from 'react' 
 import {Input,Button,List} from 'antd'
 
+//无状态组件
 const TodoListUI = (props) => {
     return (
       <div style={{marginTop:'10px',marginLeft:'10px'}}>
