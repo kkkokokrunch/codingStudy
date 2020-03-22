@@ -20,13 +20,16 @@ class TodoList extends Component {
   }
   render() {
     return(
-      <TodoListUI 
-      inputValue={this.state.inputValue}
-      handleInputChange={this.handleInputChange}
-      handleBtnClick={this.handleBtnClick}
-      list={this.state.list}
-      handleItemDelete={this.handleItemDelete}
-      />
+      <div>
+        <TodoListUI 
+        inputValue={this.state.inputValue}
+        handleInputChange={this.handleInputChange}
+        handleBtnClick={this.handleBtnClick}
+        list={this.state.list}
+        handleItemDelete={this.handleItemDelete}
+        />
+      </div>
+      
     )
   }
   handleInputChange(e) {

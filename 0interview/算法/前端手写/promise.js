@@ -1,26 +1,39 @@
-class HD {
-    static PENDING = 'pending'
-    static FUFILLED = 'fulfilled'
-    static REJECTED = "rejected"
-    constructor(executor) {
-        this.status = HD.PENDING
-        this.val = null
-        try {
-            executor(this.resolve.bind(this),this.reject.bind(this))
-        } catch (error) {
-            this.reject(error)
+class Promise {
+    constructor (fn) {
+      this.state = 'pending'
+      this.value = undefined
+      this.reason = undefined
+  
+      let resolve = value => {
+        if (this.state === 'pending') { //启动
+          this.value = value
+          this.state = 'fulfilled'//完成
         }
-    }
-    resolve(value) {
-        if(this.status == HD.PENDING) {
-            this.status = HD.FUFILLED
-            this.value = value
+      }
+  
+      let reject = value => {
+        if (this.state === 'pending') { //启动
+          this.value = value
+          this.state = 'rejected'//失败
         }
+      }
+  
+      try {
+        fn(resolve, reject)
+      }catch (error){
+        reject(error)
+      }
     }
-    reject(value) {
-        if(this.status == HD.PENDING) {
-            this.status = HD.REJECTED
-            this.value = value
+    then (onFulfilled, onRejected) {
+        switch (this.state) {
+          case 'fulfilled':
+            onFulfilled()
+            break;
+          case 'rejected':
+            onRejected()
+            break;
         }
-    }
-}
+      }
+  }
+  let pro = new Promise()
+  

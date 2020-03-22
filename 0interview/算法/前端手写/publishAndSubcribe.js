@@ -1,9 +1,5 @@
 let event = {
     list: {},
-    // list:{
-    //     key:[fn],
-    //     key:[fn2]
-    // }
     //订阅事件
     on(key,fn) {
         if(!this.list[key]) {
