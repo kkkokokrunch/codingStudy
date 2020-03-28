@@ -6,30 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        #canvas {
+            background-color: black;
+        }
+    </style>
 </head>
 
 <body>
-    <canvas id="demo" width="600" height="600">
+    <canvas id="canvas" width="400" height="400">
 
     </canvas>
 
     <script>
-        //拿到canvas标签
-        var canvas = document.getElementById('demo')
-        canvas.style.border = '1px solid pink'
-        canvas.width = 600
-        canvas.height = 600
-            //拿到canvas上下文
-        var ctx = canvas.getContext('2d')
-        ctx.moveTo(100, 100)
-        ctx.lineTo(200, 100)
-        ctx.lineTo(100, 200)
-        ctx.closePath(); //闭合路径
+        var canvas = document.getElementById("canvas")
+        var context = canvas.getContext("2d")
 
-        ctx.lineWidth = 4
-        ctx.strokeStyle = 'red'
-        ctx.stroke()
-        ctx.fill()
+        context.beginPath()
+        context.arc(100,100,50,0,Math.PI*2,true)
+        context.closePath()
+        context.fillStyle = 'rgb(255,255,255)'
+        context.fill()
+
     </script>
 </body>
 

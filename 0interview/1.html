@@ -8,17 +8,19 @@
 <body>
 
 <script>
-  function *demo(){
-    console.log(1)
-    yield
-    console.log(2)
-    yield
-    console.log(3)
+  const p = new Promise((resolve,reject) => {
+    resolve(111)
+    console.log(222)
+  })
+  p.then(res => {
+    console.log(res)
+  })
+  async function test() {
+    test1 = await 333
+    console.log(test1)
   }
-  let genobj = demo()
-  genobj.next()
-  genobj.next()
-  genobj.next()
+  test()
+  console.log(444)
 </script>
 </body>
 </html>
