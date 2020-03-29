@@ -61,7 +61,7 @@ var o4 = Object.create(P)
 2. 寄生组合继承
     ```javascript
     //Son.prototype = new Father()改成如下
-    Son.prototype = Object.create(Father.prototype)
+    Son.prototype = Object.create(Father.prototype) //Object.create的第一个参数是新创建对象的原型对象
     ```
 
 3. ES6继承

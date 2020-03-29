@@ -9,10 +9,10 @@ Function.prototype.myCall = function(ctx) {
     }
     ctx = ctx || window
     //由于谁调用this，this指向谁，现在b要调用a，所以this就是b这个函数
-    ctx.fn = this 
+    ctx.fn = this //a.fn = b
     let args = [...arguments].slice(1) //除去ctx以外剩下的参数，也就是b的参数
-    let result = ctx.fn(...args)
-    delete ctx.fn
+    let result = ctx.fn(...args) //用result保存ctx.fn
+    delete ctx.fn //再讲ctx.fn删去
     return result
 }
 
