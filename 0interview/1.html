@@ -6,14 +6,18 @@
   <title>Document</title>
 </head>
 <body>
-
+  <ul>
+    <li>11111</li>
+    <li>22222</li>
+    <li>33333</li>
+    <li>44444</li>
+    <li>55555</li>
+  </ul>
 <script>
-  var outerValue = "ninja"
-  function outerFunction() {
-    console.log(outerValue = "ninja"," i can see the ninja")
-  }
-
-  outerFunction()
+  var ul = document.querySelector('ul')
+  ul.addEventListener('click',function(e) {
+    e.target.style.backgroundColor = 'pink'
+  })
 </script>
 </body>
 </html>
