@@ -1,58 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        .image-item {
-            margin-bottom: 50px;
-            height: 200px;
-            display: block;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>lazyload</title>
+  <style>
+    .container {
+      width: 100%;
+    }
+
+    .img-area {
+      height: 600px;
+      text-align: center
+    }
+  </style>
+  <script src="./index.js"></script>
 </head>
 
 <body>
-    <img src="" class="image-item" lazyload="true" data-original="http://img1.3lian.com/2015/a1/149/d/129.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://img15.3lian.com/2015/f2/57/d/96.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://img2.3lian.com/2014cf/f6/146/d/93.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://s9.knowsky.com/sc/mjpg/92/2013082412182770364.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://pic1.win4000.com/wallpaper/b/546441f1d83c2.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://www.officedoyen.com/uploads/allimg/140929/1-140929230255201.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://img1.3lian.com/2015/w22/38/d/82.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://b.zol-img.com.cn/desk/bizhi/image/4/960x600/1393553860400.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://img2.3lian.com/2014cf/f6/146/d/92.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://pic1.win4000.com/wallpaper/2018-01-09/5a547c0cb840c.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://img.pconline.com.cn/images/upload/upc/tx/photoblog/1209/12/c8/13819415_13819415_1347457218868_mthumb.jpg" />
-    <img src="" class="image-item" lazyload="true" data-original="http://img.pconline.com.cn/images/upload/upc/tx/photoblog/1208/22/c11/13116724_13116724_1345642513025_mthumb.jpg" />
-    <script>
-        var viewHeight = document.documentElement.clientHeight
-
-        function lazyload() {
-            var eles = document.querySelectorAll('img[data-original][lazyload]')
-            Array.prototype.forEach.call(eles, function(item, index) {
-                var rect
-                if (!item.dataset.original) return
-                rect = item.getBoundingClientRect()
-                if (rect.bottom >= 0 && rect.top < viewHeight) {
-                    ! function() {
-                        var img = new Image()
-                        img.src = item.dataset.original
-                        img.onload = function() {
-                            item.src = img.src
-                        }
-                        item.removeAttribute('data-original')
-                        item.removeAttribute('lazyload')
-                    }()
-                }
-            })
-        }
-        lazyload()
-        document.addEventListener('scroll', lazyload)
-    </script>
+  <div class="container">
+    <div class="img-area">
+      <img class="my-photo" alt="loading" data-src="./images/1.jpg">
+    </div>
+    <div class="img-area">
+      <img class="my-photo" alt="loading" data-src="./images/2.jpg">
+    </div>
+    <div class="img-area">
+      <img class="my-photo" alt="loading" data-src="./images/3.jpg">
+    </div>
+    <div class="img-area">
+      <img class="my-photo" alt="loading" data-src="./images/4.jpg">
+    </div>
+    <div class="img-area">
+      <img class="my-photo" alt="loading" data-src="./images/5.jpg">
+    </div>
+    <div class="img-area">
+      <img class="my-photo" alt="loading" data-src="./images/6.jpg">
+    </div>
+  </div>
+  <script>
+    window.onload = checkImgs;
+    window.onscroll = throttle(checkImgs);
+  </script>
 </body>
 
 </html>
