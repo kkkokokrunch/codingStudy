@@ -1,0 +1,12 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "corejs": "3",
+        "useBuiltIns": "usage" //懒加载，减少加载的体积
+      }
+    ], //es6转换为es5
+    "@babel/preset-react" //打包react代码
+  ]
+}

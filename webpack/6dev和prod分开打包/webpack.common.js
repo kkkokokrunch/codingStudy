@@ -1,24 +1,18 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpack = require("webpack");
 
 module.exports = {
-  mode: "development", //设置成production，bundle.js会被压缩;development时，不会被压缩
-  devtool: "source-map", // 当代码出错，会显示在源代码中错误的位置
   entry: {
     main: "./src/index.js"
-  }, //入口，打包哪个文件
-  devServer: {
-    //和react一个效果，会自动打开8080端口
-    contentBase: "./dist",
-    open: true,
-    port: "8080",
-    hot: true,
-    hotOnly: true
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      },
       {
         test: /\.(jpg|png|gif)$/,
         use: {
@@ -64,8 +58,7 @@ module.exports = {
       //该插件打包后会自动生成一个html文件，并把打包后的js文件自动引入到html文件中
       template: "src/index.html"
     }),
-    new CleanWebpackPlugin(), //打包前会删除dist这个文件
-    new webpack.HotModuleReplacementPlugin()
+    new CleanWebpackPlugin() //打包前会删除dist这个文件
   ],
   output: {
     //打包到哪里
