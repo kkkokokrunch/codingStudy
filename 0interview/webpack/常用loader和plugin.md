@@ -1,0 +1,1 @@
+1. babel是可以将es6语法转为es5，polyfill可以转换一些es6特有名词，比如promise
