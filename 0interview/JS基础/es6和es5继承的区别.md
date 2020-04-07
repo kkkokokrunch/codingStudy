@@ -92,3 +92,11 @@ var o4 = Object.create(P)
     ```
 
 
+
+### ES5和ES6继承的区别
+
+1. class声明会提升，但不会初始化赋值
+2. class声明内部会启用严格模式
+3. class的所有方法都是不可枚举的
+4. class的所有方法都是没有原型对象prototype，所以也没有construct，不能用new来调用。
+5. class内部无法重写类名

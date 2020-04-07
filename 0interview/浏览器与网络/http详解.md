@@ -183,13 +183,13 @@ ETag也有强弱之分，弱etag只要求资源在语义上无变化，ruguohtml
 
 #### Last-Modified和if-Modified-Since
 
-这是一对，last-modified是响应头，表示资源最新修改时间，if-modified-since是请求头，也是资源最新修改时间，由浏览器告诉服务器，两者进行比较
+这是一对，last-modified是响应头，表示资源最新修改时间，if-modified-since是请求头，也是资源最新修改时间（其实就是上次服务器给的last-modified），由浏览器告诉服务器，两者进行比较，如果last-modified和if-modified-since相同，那么就会返回304
 
 #### ETag和if-None-Match
 
-if-none-match保存着服务器传来的etag，之后两者进行比对
+但是如果文件在一秒内就改变，那么上一种方法就没用了，
 
-
+if-none-match保存着服务器传来的etag，然后请求时，与服务器端的etag对比，如果相同，就直接用缓存中文件。
 
 #### http缓存工作方式
 
