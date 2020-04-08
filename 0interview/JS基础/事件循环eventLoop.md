@@ -1,5 +1,5 @@
 - macro-task(宏任务)：包括整体代码script，setTimeout，setInterval
-- micro-task(微任务)：Promise，process.nextTick
+- micro-task(微任务)：Promise.then,await下一行的代码（await xxx是同步的），process.nextTick
 
 ```
 console.log('1');

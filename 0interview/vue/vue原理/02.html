@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 写模板 -->
+    <div id="root">
+      <p>{{name}}</p>
+      <p>{{message}}</p>
+    </div>
+
+    <script>
+      function MYVue(options) {
+        // 内部数据用下划线开头，只读数据用￥开头
+        this._data = options.data;
+        this._el = options.el;
+
+        // 准备工作
+      }
+
+      let app = new MYVue({
+        el: "#root",
+        data: {
+          name: "zhangsan",
+          message: "info",
+        },
+      });
+    </script>
+  </body>
+</html>
