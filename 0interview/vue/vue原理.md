@@ -144,3 +144,26 @@ beforeUpdate（更新数据前）
 updated（更新数据后）
 beforeDestroy（卸载组件前）
 destroyed（卸载组件后）
+
+
+
+## Object.defineProperty
+
+#### Object.defineProperty的属性
+
+1. get
+2. set
+3. configurable
+4. enumerable
+5. value
+6. writable
+
+
+
+#### Object.defineProperty的缺点
+
+1. 无法监听数组变化
+2. 只能劫持对象的属性，所以需要对每个对象的每个属性进行遍历，如果属性值也是对象，就要进行深度遍历，所以如果能接吃一个完整的对象就更好了
+
+以上这些缺陷，proxy都可以解决
+

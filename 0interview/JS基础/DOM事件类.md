@@ -3,7 +3,7 @@
     ```
     element.onclick = function(){}
     ```
-2. DOM2
+2. DOM2 addEventListener第三个参数默认为false，代表事件冒泡
     ```
     element.addEventListener('click',function() {},flase)
     ```
