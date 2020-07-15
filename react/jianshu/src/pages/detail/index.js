@@ -1,4 +1,4 @@
-import React , { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DetailWrapper, Header, Content } from './style';
@@ -6,10 +6,11 @@ import { actionCreators } from './store';
 class Detail extends PureComponent {
   render() {
     console.log(this.props.match.params.id)
+    console.log(this.props.content)
     return (
       <DetailWrapper>
         <Header>{this.props.title}</Header>
-        <Content dangerouslySetInnerHTML={{__html: this.props.content}}>
+        <Content dangerouslySetInnerHTML={{ __html: this.props.content }}>
         </Content>
       </DetailWrapper>
     )
@@ -22,13 +23,13 @@ class Detail extends PureComponent {
 
 
 const mapState = (state) => ({
-  title:state.getIn(['detail','title']),
+  title: state.getIn(['detail', 'title']),
   content: state.getIn(['detail', 'content'])
 })
 
 const mapDispatch = (dispatch) => ({
   getDetail(id) {
-		dispatch(actionCreators.getDetail(id));
-	}
+    dispatch(actionCreators.getDetail(id));
+  }
 })
-export default connect(mapState,mapDispatch)(withRouter(Detail));
+export default connect(mapState, mapDispatch)(withRouter(Detail));

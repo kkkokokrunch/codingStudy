@@ -1,16 +1,5 @@
 import { request } from "./request";
 
-// export function insertUser(name,password) {
-//     return request({
-//         url: '/users/userRegister',
-//         method: 'post',
-//         data: {
-//             name,
-//             password
-//         },
-//     })
-// }
-
 export function getBannersdata() {
     return request({
         // url: "/swiper.json"

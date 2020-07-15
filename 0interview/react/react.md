@@ -144,7 +144,17 @@ componentWillUnmount：这个组件即将被剔除时才会执行
 
 ### 关于 setState
 
+## 为什么设计成异步
+
+1. 可以显著提升性能
+   - 如果每次调用setState都进行一次更新，那么render函数就会被频繁调用，界面会重新渲染，效率很低
+2. 为了保证state和props同步
+   - 如果同步更新state，但是还没有执行render函数，这是state和props不能保持一致，开发时会遇到很多问题
+
 #### React 中 setState 什么时候是同步的，什么时候是异步的？
+
+- 在组件生命周期或React合成事件中，setState是异步；
+- 在setTimeout或者原生dom事件中，setState是同步；
 
 这里所说的同步异步， 并不是真正的同步异步， 它还是同步执行的。
 这里的异步指的是多个 state 会合成到一起进行批量更新。
@@ -155,6 +165,21 @@ componentWillUnmount：这个组件即将被剔除时才会执行
 
 https://www.oschina.net/translate/functional-setstate-is-the-future-of-react?print
 
+setState实际是通过 Object.assign()来合并对象的，当你传入的对象有相同的key时，最后一个包含此key的对象会覆盖之前的对象。
+
+所以应该使用函数，这样多个state合并时，每次遍历都会执行一次函数。
+
 ### setState 第二个参数
 
-该函数会在 setState 函数调用完成并且组件开始重渲染的时候被调用，我们可以用该函数来监听渲染是否完成，在 vue 中可以用 nextTick 代替
+该函数会在 setState 函数调用完成并且组件开始重渲染的时候被调用，我们可以用该函数来监听渲染是否完成，在 vue 中可以用 nextTick 代替，也就是说我们可以通过第二个参数的回调函数来获取更新后的state
+
+```javascript
+changeText() {
+  this.setState({
+    message: "你好啊,李银河"
+  }, () => {
+    console.log(this.state.message); // 你好啊,李银河
+  });
+}
+```
+
