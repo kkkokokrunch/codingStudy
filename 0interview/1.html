@@ -1,63 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <!-- 写模板 -->
-    <div id="root">
-      <p>{{name}}</p>
-      <p>{{message}}</p>
-    </div>
 
-    <script>
-      let rkuohao = /\{\{(.+?)\}\}/g;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
 
-      // 1.拿到模板
-      let tmpNode = document.querySelector("#root");
-      // 2.拿到数据
-      let data = {
-        name: "一个新name",
-        message: "一个消息",
-      };
-      // 3.将数据与模板结合，得到的是HTML元素（DOM元素）
-      // 可以使用递归
-      // 现在这个案例中，template是DOM元素，真的vue源码中是DOM=>字符串模板
-      function compiler(template, data) {
-        let childNodes = template.childNodes; //取出子元素
-        for (let i = 0; i < childNodes.length; i++) {
-          let type = childNodes[i].nodeType;
-          if (type === 3) {
-            //说明是文本节点，可以判断里面是否有{{}}插值表达式
-            let txt = childNodes[i].nodeValue; //该属性只有文本节点才有意义
-            // 有没有双花括号？？
-            //replace使用正则匹配到一次，函数就会执行一次，
-            //函数的第0个参数，表示匹配到的内容，
-            //函数的第n个参数，表示正则中的第n组
-            txt = txt.replace(rkuohao, function (_, g) {
-              let key = g.trim(); //g就是双花括号中的内容
-              let value = data[key];
+<body>
+  <!-- 
+        1.app.message修改数据，vue内部是如何监听message数据的改变？
+        *Object.defineProperty -> 监听对象属性的改变
 
-              // 将{{xxxx}}用这个值替换
-              return value;
-            });
+        2.当数据发生改变，vue是如何知道要通知哪些人，界面发生刷新
+        *发布订阅模式
+     -->
+  <div id="app">
+    {{message}} {{name}}
+  </div>
 
-            childNodes[i].nodeValue = txt;
-          } else if (type === 1) {
-            //节点为元素
-            compiler(childNodes[i], data); //递归
-          }
-        }
+  <script>
+    const obj = {
+      message: "123哈哈哈",
+      name: "why",
+    };
+
+    Object.keys(obj).forEach((key) => {
+      let value = obj[key];
+
+      Object.defineProperty(obj, key, {
+        set(newValue) {
+          console.log("监听" + key + "改变");
+          //告诉那些使用了的人
+          value = newValue;
+        },
+        get() {
+          console.log("获取" + key + "对应的值");
+          //张三：get
+          //李四：get
+          //王五：get
+          return value;
+        },
+      });
+    });
+
+    //发布订阅模式
+    class Dep {
+      constructor() {
+        this.subs = [];
+        // dep的一个属性是subs;
       }
 
-      //利用模板生成一个需要被渲染的HTML标签（准 真正在页面中显示的标签）
-      let generateNode = tmpNode.cloneNode(true);
-      compiler(tmpNode, data); //将坑（{{}}）替换掉
-      console.log(tmpNode);
-      // 4.将渲染好的HTML放到页面中
-      root.parentNode.replaceChild(generateNode, root);
-    </script>
-  </body>
+      addSub(watcher) {
+        //subs中放着所有的watcher
+        this.subs.push(watcher);
+      }
+
+      notify() {
+        this.subs.forEach((item) => {
+          item.update();
+        });
+      }
+    }
+
+    class Watcher {
+      constructor(name) {
+        this.name = name;
+      }
+
+      update() {
+        console.log(this.name + "发生update");
+      }
+    }
+    const dep = new Dep();
+
+    const w1 = new Watcher("张三");
+    dep.addSub(w1);
+
+    const w2 = new Watcher("李四");
+    dep.addSub(w2);
+
+    const w3 = new Watcher("王五");
+    dep.addSub(w3);
+
+    dep.notify();
+  </script>
+
+  <script>
+    const app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          message: "哈哈哈",
+          name: "why",
+        };
+      },
+    });
+  </script>
+</body>
+
 </html>

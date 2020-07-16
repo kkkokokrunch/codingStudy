@@ -1,23 +1,26 @@
 /**
- * Definition for singly-linked list.
- * function ListNode(val) {
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
  *     this.val = val;
- *     this.next = null;
+ *     this.left = this.right = null;
  * }
  */
 /**
- * @param {ListNode} head
- * @return {ListNode}
+ * @param {TreeNode} root
+ * @return {boolean}
  */
-var removeDuplicateNodes = function (head) {
-  if (!head) return null
-  let map = {}
-  map[head.val] = true
-  let node = head.next
-  let prev = head
-  while (node) {
-    if (map[node.val]) {
-      prev.next = nodex
-    }
+var isValidBST = function (root) {
+  let arr = []
+
+  function dfs(root) {
+    if (!root) return
+    if (root.left) dfs(root.left)
+    arr.push(root.val)
+    if (root.right) dfs(root.right)
   }
+  dfs(root)
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] >= arr[i + 1]) return false
+  }
+  return true
 };

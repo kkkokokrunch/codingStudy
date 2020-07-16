@@ -192,7 +192,45 @@ http1.1默认使用长连接，不需要什么特殊的头字段指定，只要�
 
 服务器有时会设置多个set-cookie，但是浏览器请求时只要设置一个，将键值对用分号隔开
 
+### cookie不可跨域
 
+```javascript
+javascript:document.cookie='myname=laihuamin;path=/;domain=.baidu.com';
+javascript:document.cookie='myname=huaminlai;path=/;domain=.google.com';
+```
+
+当打开百度的网页设置cookie时，只有上面那个是有效的，每个cookie都会绑定单一的域名。
+
+### cookie的属性
+
+1. name
+
+2. value
+
+3. domain：指cookie绑定的域名，同一域名下的二级域名也不能交换使用cookie，如www.baidu\.com和image.baidu.com不能共用一个cookie
+
+4. path：web的路由
+
+5. Expires/Max-Age（有效期）：和缓存类似，max-age小于零时，表示临时储存，不生成cookie文件，当浏览器关闭cookie就消失，当max-age=0时，会删除cookie
+
+6. secure：为true时，这个cookie只会在http设ssl等安全协议下传输（不能对客户端cookie加密，不能保证绝对安全）
+
+7. httpOnly：告诉浏览器，此cookie只能通过浏览器http协议传输，禁止其他方式访问，比如通过js脚本获取。可以防止xss攻击。
+
+8. SameSite：SameSite 属性可以让 Cookie 在跨站请求时不会被发送，从而可以阻止跨站请求伪造攻击（CSRF）。
+
+   - **Strict** 仅允许一方请求携带 Cookie，即浏览器将只发送相同站点请求的 Cookie，即当前网页 URL 与请求目标 URL 完全一致。
+
+   - **Lax** 允许部分第三方请求携带 Cookie，默认
+
+   - **None** 无论是否跨站都会发送 Cookie
+
+   #### 什么是跨站
+
+   同站：只要两个 URL 的 eTLD+1 相同即可，不需要考虑协议和端口。其中，eTLD 表示有效顶级域名，注册于 Mozilla 维护的公共后缀列表（Public Suffix List）中，例如，.com、.co.uk、.github.io 等。eTLD+1 则表示，有效顶级域名+二级域名，例如 taobao.com 等。
+
+   
+   举几个例子，www.taobao.com 和 www.baidu.com 是跨站（.com前一个是taobao一个是百度），www.a.taobao.com 和 www.b.taobao.com 是同站（.com前都是taobao），a.github.io 和 b.github.io 是跨站(注意是跨站)（.github.io 是一级域名，前面一个是a，一个是b）。
 
 ### 防止cookie外泄
 
