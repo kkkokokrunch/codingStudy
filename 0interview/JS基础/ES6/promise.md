@@ -69,8 +69,10 @@ promise.then((contents) => {
 1. await只能放在async函数中
 2. 相比generator更加语义化
 3. await后面可以是promise对象，也可以是其他类型，最后都会被包装成promise
-4. async函数返回值是一个promise对象
-5. 只要await语句后面promise状态变成reject，那么整个async函数都会中断
+4. await就像一个求值关键字，可以获得后面promise返回的值
+5. async函数返回值是一个promise对象
+6. 只要await语句后面promise状态变成reject，那么整个async函数都会中断
+   
 
 ```javascript
 async function fn2() {
