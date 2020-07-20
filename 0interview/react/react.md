@@ -23,9 +23,9 @@
 当组件的 props 和 state 发生改变时，render 函数就会重新执行。  
 父组件的 render 被运行时，它的子组件的 render 也会被重新运行
 
+可以用shouldComponentUpdate阻止不必要的render（具体方法见下面生命周期）
 
-
-
+但是在每个组件里面都写SCU是不现实的，可以令组件继承PureComponent,这样组建内部自动就会有SCU
 
 
 
@@ -67,18 +67,37 @@
 1. 性能提升
 2. 使得跨端应用得以实现（React Native）
 
+## React渲染流程
 
+JSX ->虚拟DOM ->真实DOM
 
+## React更新流程
 
+props/state改变 =》render函数重新执行 =》产生新的DOM树 =》新旧DOM树进行diff对比 =》计算出差异进行更新 =》更新到真实DOM
 
 ### diff 算法
 
 就是比对原始虚拟 DOM 和新的虚拟 DOM 的区别的算法  
 他是比较同层的节点，如果发现某一层的虚拟 DOM 不一样，下面就不会继续进行比较
 
+
+
+### key的作用
+
+- 星际穿越 key=111
+- 盗梦空间 key=222
+
+和
+
+- 大话西游 key=333
+- 星际穿越 key=111
+- 盗梦空间 key=222
+
+diff算法在进行对比时，会将key=111和222 的元素进行位移，而不用修改，再将key=333的元素插入到最前面的位置即可
+
 #### 为什么 key 值最好不要是 index？
 
-因为 key 值是 index，就无法保证原始虚拟 DOM 和新的虚拟 DOM 的 key 值一致。
+因为 key 值是 index，就无法保证原始虚拟 DOM 和新的虚拟 DOM 的 key 值一致。上面说的111和222会变成222和333
 
 
 
@@ -182,4 +201,44 @@ changeText() {
   });
 }
 ```
+
+
+
+### state的数据应该是不可变的
+
+如果直接改变state中的数据，scu时，由于数据源是一个对象，对比时还是对比相同的地址，所以页面不会发生更新。所以应该先对原数据进行拷贝，对拷贝下来的数据进行修改。
+
+
+
+## 获取ref
+
+1. refs
+
+   ```jsx
+   <h2 ref="titleRef">hello<h2/>
+   {/*获取dom*/}
+   this.refs.titleRef
+   ```
+
+2. 通过createRef()
+
+   ```jsx
+   constructor(props) {
+       this.titleRef = createRef()
+   }
+   <h2 ref={this.titleRef}>hello<h2/>
+   {/*获取dom*/}
+   this.titleRef.current
+   ```
+
+3. 通过回调函数
+
+   ```jsx
+    constructor(props) {
+       this.titleEl = null;
+     }
+   <h2 ref={element => this.titleEl = element}>Callback Ref</h2>
+   {/*获取dom*/}
+   this.titleEl.innerHTML = "你好啊,李银河";
+   ```
 
