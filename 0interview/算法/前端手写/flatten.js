@@ -12,3 +12,10 @@
 var arr1 = [1, 2, [3, 4]];
 arr1.flat();
 console.log(arr1);
+
+
+function flatten(arr) {
+  return arr.reduce((result, item) => {
+    return result.concat(Array.isArray(item) ? flatten(item) : item)
+  }, [])
+}

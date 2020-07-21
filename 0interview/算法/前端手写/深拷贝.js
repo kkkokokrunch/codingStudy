@@ -16,18 +16,19 @@ function cloneDeep(source) {
     return target
 }
 
+
 a = {
-  name:'张三',
-  age:20,
-  test() {
-    console.log(123)
-  },
-  b: {
-    c:100
-  }
- }
+    name: '张三',
+    age: 20,
+    test() {
+        console.log(123)
+    },
+    b: {
+        c: 100
+    }
+}
 
- test1 = cloneDeep(a)
+test1 = cloneDeep(a)
 
-test1.age = 5
- console.log(a) 
+test1.b.c = 5
+console.log(a)
