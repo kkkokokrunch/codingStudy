@@ -4,21 +4,28 @@
 
 1. 性能问题
 
-这种直接改变原有对象的方式导致 react 无法对其进行任何优化，因此
-会有潜在的性能问题
+   这种直接改变原有对象的方式导致 react 无法对其进行任何优化，因此会有潜在的性能问题
 
 2. 很难定位问题
 
-如果你用了 purecomponent， 会发现状态无法直接更新。
-原因在于 purecomponent 重写了 SCU，SCU 中通过直接判断 state 和 props 前后的引用差别来判断，因此会
-返回 false，导致 render 无法运行。（也就是无法 render）
+   如果你用了 purecomponent， 会发现状态无法直接更新。
 
-#### React 中 setState 什么时候是同步的，什么时候是异步的？
+   原因在于 purecomponent 重写了 SCU，SCU 中通过直接判断 state 和 props 前后的引用差别来判断，因此会
+   返回 false，导致 render 无法运行。（也就是无法 render）
 
-这里所说的同步异步， 并不是真正的同步异步， 它还是同步执行的。
-这里的异步指的是多个 state 会合成到一起进行批量更新。
+### React 中 setState 什么时候是同步的，什么时候是异步的？
+- 在setTimeout或者原生dom事件中，setState是同步；
+- 在组件生命周期或React合成事件中，setState是异步；
 
-如果连续调用三次 setState，变更三组数据，如果 React 这时连续做三次虚拟 DOM 的比对，更新三次页面，如果这三次 setState 的时间间隔非常小，那么是非常浪费性能的。所以 React 会将这三次 setState 合并成一次，这样就只需要进行一次虚拟 DOM 的比对，更新一次页面，可以提高性能。
+   这里所说的同步异步， 并不是真正的同步异步， 它还是同步执行的。这里的异步指的是多个 state 会合成到一起进行批量更新。
+
+   如果连续调用三次 setState，变更三组数据，如果 React 这时连续做三次虚拟 DOM 的比对，更新三次页面，如果这三次 setState 的时间间隔非常小，那么是非常浪费性能的。所以 React 会将这三次 setState 合并成一次，这样就只需要进行一次虚拟 DOM 的比对，更新一次页面，可以提高性能。
+
+### 为什么设计成异步
+1. 可以显著提升性能
+   - 如果每次调用setState都进行一次更新，那么render函数就会被频繁调用，界面会重新渲染，效率很低
+2. 为了保证state和props同步
+   - 如果同步更新state，但是还没有执行render函数，这是state和props不能保持一致，开发时会遇到很多问题
 
 ### 为什么最好在 setState 中传入一个函数？
 
@@ -31,6 +38,15 @@ https://www.oschina.net/translate/functional-setstate-is-the-future-of-react?pri
 ### setState 第二个参数
 
 该函数会在 setState 函数调用完成并且组件开始重渲染的时候被调用，我们可以用该函数来监听渲染是否完成，在 vue 中可以用 nextTick 代替
+```javascript
+changeText() {
+  this.setState({
+    message: "你好啊,李银河"
+  }, () => {
+    console.log(this.state.message); // 你好啊,李银河
+  });
+}
+```
 
 ### 为什么使用 immutable？
 

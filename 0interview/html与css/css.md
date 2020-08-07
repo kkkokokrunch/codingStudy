@@ -2,6 +2,16 @@
 
 内联  > ID选择器 > 类选择器 > 标签选择器
 
+
+
+### 块级元素，行内元素
+
+行内元素：inline，设置宽高都无效，margin和padding都只有左右有效，上下无效
+
+常见块级元素：div,h1~h6,hr,p,table,ol,ul,center,
+
+常见行内元素：a,b,em,font,img,input,label,q,s,select,span,textarea
+
 ### 水平居中有哪几种方法？水平垂直居中的方法
 
 1. 子绝父相，子盒子top，left都50%，再margin-top，-left50%的盒子宽高
@@ -157,7 +167,12 @@ flex: none | auto | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
 
 
 
+### @import和link
 
+1. `link`功能较多，可以定义 `RSS`，定义 `Rel` 等作用，而`@import`只能用于加载 `css`
+2. 当解析到`link`时，页面会同步加载所引的 `css`，而`@import`所引用的 `css` 会等到页面加载完才被加载
+3. `@import`需要 `IE5` 以上才能使用
+4. `link`可以使用 `js` 动态引入，`@import`不行
 
 
 

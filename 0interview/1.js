@@ -1,25 +1,12 @@
-function unique(arr) {
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[i] === arr[j]) {
-        arr.splice(j, 1)
-        j--
-      }
-    }
-  }
-  return arr
+function setname(name) {
+  this.name = name
 }
+setname.prototype.printName = function () {
+  console.log(this.name)
+}
+let a = new setname("cc")
+a.name = "dd"
+a.__proto__.name = "ee"
 
-function unique1(arr) {
-  let res = []
-  for (let i = 0; i < arr.length; i++) {
-    if (res.indexOf(arr[i]) === -1) {
-      res.push(arr[i])
-    }
-  }
-  return arr
-}
-
-function unique2(arr) {
-  return [...new Set(arr)]
-}
+console.log(a.__proto__.printName()) // ?
+console.log(a.printName()) // ?

@@ -14,14 +14,9 @@
    就是 deleteItem={this.handleItemDelete}  
    在子组件中 deleteItem(index)，通过调用父组件传来的函数，将子组件的数据作为形参给这个函数使用
 
-
-
-
-
 ## props state 和 render
 
-当组件的 props 和 state 发生改变时，render 函数就会重新执行。  
-父组件的 render 被运行时，它的子组件的 render 也会被重新运行
+这里所说的同步异步， 并不是真正的同步异步， 它还是同步执行的。这里的异步指的是多个 state 会合成到一起进行批量更新。
 
 可以用shouldComponentUpdate阻止不必要的render（具体方法见下面生命周期）
 
@@ -101,10 +96,6 @@ diff算法在进行对比时，会将key=111和222 的元素进行位移，而�
 
 
 
-
-
-
-
 ## 生命周期函数
 
 #### Initialization（初始化）
@@ -157,59 +148,6 @@ componentWillUnmount：这个组件即将被剔除时才会执行
 
 
 
-
-
-
-
-### 关于 setState
-
-## 为什么设计成异步
-
-1. 可以显著提升性能
-   - 如果每次调用setState都进行一次更新，那么render函数就会被频繁调用，界面会重新渲染，效率很低
-2. 为了保证state和props同步
-   - 如果同步更新state，但是还没有执行render函数，这是state和props不能保持一致，开发时会遇到很多问题
-
-#### React 中 setState 什么时候是同步的，什么时候是异步的？
-
-- 在组件生命周期或React合成事件中，setState是异步；
-- 在setTimeout或者原生dom事件中，setState是同步；
-
-这里所说的同步异步， 并不是真正的同步异步， 它还是同步执行的。
-这里的异步指的是多个 state 会合成到一起进行批量更新。
-
-如果连续调用三次 setState，变更三组数据，如果 React 这时连续做三次虚拟 DOM 的比对，更新三次页面，如果这三次 setState 的时间间隔非常小，那么是非常浪费性能的。所以 React 会将这三次 setState 合并成一次，这样就只需要进行一次虚拟 DOM 的比对，更新一次页面，可以提高性能。
-
-### 为什么最好在 setState 中传入一个函数？
-
-https://www.oschina.net/translate/functional-setstate-is-the-future-of-react?print
-
-setState实际是通过 Object.assign()来合并对象的，当你传入的对象有相同的key时，最后一个包含此key的对象会覆盖之前的对象。
-
-所以应该使用函数，这样多个state合并时，每次遍历都会执行一次函数。
-
-### setState 第二个参数
-
-该函数会在 setState 函数调用完成并且组件开始重渲染的时候被调用，我们可以用该函数来监听渲染是否完成，在 vue 中可以用 nextTick 代替，也就是说我们可以通过第二个参数的回调函数来获取更新后的state
-
-```javascript
-changeText() {
-  this.setState({
-    message: "你好啊,李银河"
-  }, () => {
-    console.log(this.state.message); // 你好啊,李银河
-  });
-}
-```
-
-
-
-### state的数据应该是不可变的
-
-如果直接改变state中的数据，scu时，由于数据源是一个对象，对比时还是对比相同的地址，所以页面不会发生更新。所以应该先对原数据进行拷贝，对拷贝下来的数据进行修改。
-
-
-
 ## 获取ref
 
 1. refs
@@ -241,4 +179,42 @@ changeText() {
    {/*获取dom*/}
    this.titleEl.innerHTML = "你好啊,李银河";
    ```
+
+
+
+### this指向
+
+在react中，因为使用了class语法，所有在class中生命的方法会自动使用严格模式。
+
+当你使用 `onClick={this.handleClick}`来绑定事件监听函数的时候，`handleClick` 函数实际上会作为回调函数，传入 `addEventListener()` 。由于是回调函数，没有显示的调用者，所以会指向undefined。
+
+这就是为什么你在 React 的组件中添加事件处理函数为什么会得到 `undefnied` 而不是全局对象或者别的什么东西。
+
+所以要用bind显示绑定this到当前的组件上。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
